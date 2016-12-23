@@ -1,0 +1,55 @@
+GIT TUTORIAL
+//////////////////////////
+
+ANTES DE NADA
+--------------------------
+1. Hace falta instalar Git en el ordenador antes de poder usar el repositorio (de aquí en adelante "repo"). Puedes hacer
+
+  sudo apt install git
+
+en Ubuntu o sistemas basados en Debian; en Windows es un .exe sin mucha complicación que puedes coger de:
+
+  https://git-scm.com/download/win
+
+COMANDOS
+--------------------------
+Los comandos que vamos a utilizar son: 
+
+git clone https://github.com/MNXANL/HackTrip/ 
+> (Donde está el link es el repo) Clona (o copia) los archivos del repositorio en una carpeta que creará con el mismo nombre que el repo. Pedirá tu nombre y password si se trata de un repo privado (como es el caso, SÍ)
+
+
+git pull [repo]
+> Actualiza el repo con la nueva información que pueda tener. Esto sirve cuando un usuario hace cambios en el repo, y los demás descargan los datos para ponerse al día.
+
+git status
+> Comprueba el estado del repositorio, en especial si se han añadido/eliminado archivos del repo.
+
+
+git add .
+git add <file1.t file2.t ... fileN.txt>
+> Añadir archivos al repo. "add ." Añade TODOS los archivos al repositorio; es posible que, si mueves archivos de una banda a otra, se hagan «copias» en el repo. Cuidado!
+
+
+git rm .
+git rm <file1.t file2.t ... fileN.txt>
+> Eliminar archivos del repo. La estructura es similar a la del 'add', solo que funciona al revés. Obviamente hay que andar con mucho cuidado con esa opción; haz un backup antes de nada.
+
+
+git commit -m "COMMENT"
+> Confirma los cambios en el repositorio. El COMENTARIO puede ser cualquiera, pero tienes que hacer uno siempre (aunque digas "Remolacha" o "Picatoste mojado en vino")
+
+
+git pull [repo]
+>Cuando se suben cambios en un repo, conviene hacer un pull para no mezclar cambios. Se recomienda que cada uno trabaje con ficheros diferentes (la mierda del diseño modular de PRO2) para evitar solapamientos!
+
+
+git push [repo]
+>Sube los archivos al repositorio. Este es el paso definitivo e importante en el proceso de subir archivos. 
+Pedira username y password como confirmación.
+
+
+--------------------------
+Recuerdo que hay más comandos en Git, pero este es solo un subconjunto de comandos que son relevantes para lo que vamos a hacer. Entre otras cosas, puedes hacer forks, branchs, etc. 
+
+Espero que te sirva :)
