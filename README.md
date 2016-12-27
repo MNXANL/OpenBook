@@ -1,7 +1,7 @@
 #Android project | IDI QT 2016/2017
 How do I run it?
 
-	Install Gentoo.
+	Install Android Studio, then compile the .apk file with it. [eso es mentira, que hay que darles uno a estos]
 
 I don't understand anything! Where's the documentation?
 
