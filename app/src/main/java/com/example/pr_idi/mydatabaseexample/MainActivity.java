@@ -1,13 +1,14 @@
 package com.example.pr_idi.mydatabaseexample;
 
 
-import java.util.List;
-import java.util.Random;
-
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends ListActivity {
     private BookData bookData;
@@ -17,6 +18,9 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        Toolbar myTB = (Toolbar) findViewById(R.id.actionbar);
+        //setSupportActionBar(myTB);
+
         bookData = new BookData(this);
         bookData.open();
 
@@ -24,8 +28,7 @@ public class MainActivity extends ListActivity {
 
         // use the SimpleCursorAdapter to show the
         // elements in a ListView
-        ArrayAdapter<Book> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, values);
+        ArrayAdapter<Book> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
     }
 

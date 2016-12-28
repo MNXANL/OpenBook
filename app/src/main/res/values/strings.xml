@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">MyDatabaseExample</string>
+    <string name="app_name">MyBookDatabase</string>
+    <string name="action_favorite">Favourite</string>
+    <string name="action_settings">Settings</string>
 </resources>
