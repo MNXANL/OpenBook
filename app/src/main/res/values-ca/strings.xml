@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LaMevaBDdeLlibres</string>
+    <string name="action_favorite">Preferits</string>
+    <string name="action_settings">Preferències</string>
+    <string name="insert">Afegir entrada</string>
+    <string name="delete">Esborrar 1er</string>
+    <string name="about">Sobre la app…</string>
+</resources>

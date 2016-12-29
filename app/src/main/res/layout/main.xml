@@ -11,32 +11,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout-->
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/actionbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:popupTheme="@style/AppTheme.PopupOverlay"/>
-    
     <LinearLayout
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
+
         <Button
             android:id="@+id/add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add New"
+            android:text="@string/insert"
             android:onClick="onClick"/>
 
         <Button
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete First"
+            android:text="@string/delete"
             android:onClick="onClick"/>
+
+        <Button
+            android:text="@string/action_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/settngs_button"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="@string/about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_button"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <ListView
