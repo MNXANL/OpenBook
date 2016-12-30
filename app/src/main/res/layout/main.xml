@@ -1,58 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" >
-
-    <!--FrameLayout
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout-->
+        android:layout_height="match_parent" />
+    <!-- The navigation drawer -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        <!-- FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout -->
 
-        <Button
-            android:id="@+id/add"
+        <LinearLayout
+            android:id="@+id/group"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/insert"
-            android:onClick="onClick"/>
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:onClick="onClick"/>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:text="="
+                android:onClick="onClick"
+                style="@android:style/ThemeOverlay.Material.Dark" />
 
-        <Button
-            android:text="@string/action_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/settngs_button"
-            android:layout_weight="1" />
+            <Button
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insert"
+                android:onClick="onClick"/>
 
-        <Button
-            android:text="@string/about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/about_button"
-            android:layout_weight="1" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:onClick="onClick"/>
+
+            <Button
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_help"
+                android:onClick="onClick" />
+
+            <Button
+                android:id="@+id/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_title"
+                android:onClick="onClick" />
+
+        </LinearLayout>
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-
-
-
+    />
 </LinearLayout >
 
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_nav_drawer"
+        app:menu="@menu/activity_nav_drawer_drawer" />
+</android.support.v4.widget.DrawerLayout>
 
