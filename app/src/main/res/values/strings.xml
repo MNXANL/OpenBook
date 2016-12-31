@@ -11,5 +11,13 @@
     <!-- Here lies everything related to the NavDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_help_tabs">HelpTabsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="titol">Title</string>
+    <string name="autor">Author</string>
+    <string name="any">Year</string>
+    <string name="editorial">Publisher</string>
+    <string name="categoria">Genre</string>
+    <string name="val">Rating</string>
 
 </resources>

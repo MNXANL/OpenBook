@@ -21,6 +21,15 @@
             android:name=".NavDrawerActivity"
             android:label="@string/title_activity_nav_drawer"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".HelpTabsActivity"
+            android:label="@string/title_activity_help_tabs"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
