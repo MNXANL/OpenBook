@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemAdapter adapter;
     private FloatingActionButton floatingActionButton;
     private static final int DURATION = 150;
+    private static final int VERTICAL_ITEM_SPACE = 48;
 
     private NavigationView nvDrawer;
     private DrawerLayout mDrawer;
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-
         //recycle view
         mrecView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mrecView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting toolbar and drawer
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        setTitle("MyBookDB | Main Menu");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true); //Burger
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setTitle("MyBookDB");
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = setupDrawerToggle();
@@ -64,16 +63,14 @@ public class MainActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
-        //clic al FloatingActionBtton
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        //clic al botó
+        /*floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //creo un nou llibre
                 Intent intent = new Intent(MainActivity.this, NewActivity.class);
-                startActivity(intent);
             }
-        });
-
+        });*/
         //definim si l'scroll va cap amunt o cap avall
         Action scrollAction = new Action() {
             private boolean hidden = true;
@@ -83,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     hidden = false;
                     animate(floatingActionButton)
                             .translationY(floatingActionButton.getHeight() + getResources().getDimension(R.dimen.fab_margin))
-                            .setInterpolator(new LinearInterpolator())
-                            .setDuration(DURATION);
+                            .setInterpolator(new LinearInterpolator()).setDuration(DURATION);
                 }
             }
             @Override
@@ -92,10 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!hidden) {
                     hidden = true;
                     animate(floatingActionButton)
-                            .translationY(0)
-                            .setInterpolator(new LinearInterpolator())
-                            .setDuration(DURATION);
-
+                            .translationY(0).setInterpolator(new LinearInterpolator()).setDuration(DURATION);
                 }
             }
 
@@ -105,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
         bookData.open();
 
         //agafo llibres ordenats per títol
-
-        inicialitza(); //COMENTADO PARA QUE NO GENERE MIL LIBRITOS
+        //inicialitza(); //COMENTADO PARA QUE NO GENERE MIL LIBRITOS
 
         List<Book> values = bookData.getAllBooksbyTitol();
 
@@ -114,8 +106,11 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ItemAdapter(values);
         mrecView.setAdapter(adapter);
         mrecView.setItemAnimator(new DefaultItemAnimator());
+
         //si moc l'scroll defineixo un conjunt d'operacions
         adapter.setOnScrollListener(mrecView, scrollAction);
+        mrecView.addItemDecoration(new DividerItemDecoration(this));
+
         //si faig clic algun element de la llista
         adapter.setOnItemClickListener(new com.example.pr_idi.mydatabaseexample.OnItemClickListener() {
             @Override
@@ -184,28 +179,28 @@ public class MainActivity extends AppCompatActivity {
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1876",
                     "Pierre-Jules Hetzel", "Aventura", "molt bo");
-            adapter.add(book);
+            //adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1922",
                     "Sylvia Beach", "Clàssic", "bo");
-            adapter.add(book);
+            //adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1605",
                     "Francisco de Robles", "Clàssic", "molt bo");
-            adapter.add(book);
+            //adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1915",
                     "Kurt Wolff", "Humor", "bo");
-            adapter.add(book);
+            //adapter.add(book);
         }
     }
-    //context menu actuarà sobre el recycler view
+    //context menu actuarà sobre el recycle view
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         int id = v.getId();
@@ -214,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.my_recycler_view:
                 inflater.inflate(R.menu.context_menu, menu);
                 break;
+
         }
     }
-
     //clic sobre elements del context menu
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -285,7 +280,9 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.main_content, new FirstFragment()).commit();
                 break;
             case R.id.recent:
-                fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
+                //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
+                Intent i = new Intent(MainActivity.this, llista_categoria.class);
+                startActivity(i);
                 break;
             case R.id.about:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();

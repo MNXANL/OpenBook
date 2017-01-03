@@ -57,5 +57,6 @@
             android:padding="3dip"
             android:paddingBottom="5dip"
             android:src="@drawable/ic_star" />
+
     </TableRow>
 </TableLayout>

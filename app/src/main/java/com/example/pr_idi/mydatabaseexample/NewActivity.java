@@ -30,6 +30,7 @@ public class NewActivity extends AppCompatActivity {
         star = (RatingBar) findViewById(R.id.ratingBar);
 
 
+
         toolbar = (Toolbar) findViewById(R.id.tbar);
         setTitle("MyBookDB | New Book"); //Esto por alguna razón no pasa
         setSupportActionBar(toolbar);
