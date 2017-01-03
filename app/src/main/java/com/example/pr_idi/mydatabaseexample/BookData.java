@@ -14,8 +14,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.pr_idi.mydatabaseexample.R.id.year;
-
 public class BookData {
 
     // Database fields

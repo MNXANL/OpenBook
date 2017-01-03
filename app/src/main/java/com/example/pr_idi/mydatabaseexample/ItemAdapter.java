@@ -89,9 +89,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             String y = String.valueOf(b.getYear());
             myear.setText( y ); //EXCEPTION!
             mcategory.setText(b.getCategory());
-            String val = b.getPersonal_evaluation(); //EXCEPTION!
-
-            switch (val){
+            //String val = b.getPersonal_evaluation(); //EXCEPTION!
+            mval.setRating(3.5f);
+           /* switch (val){
                 case "molt bo":
                     mval.setRating(5.0f);
                     break;
@@ -110,7 +110,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 default:
                     mval.setRating(0.0f);
                     break;
-            }
+            }*/
         }
     }
     public OnItemClickListener getOnItemClickListener(){
