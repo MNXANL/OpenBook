@@ -13,4 +13,6 @@
     <string name="delete">Eliminar</string>
     <string name="missatge1">S\'ha eliminat el llibre </string>
 
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

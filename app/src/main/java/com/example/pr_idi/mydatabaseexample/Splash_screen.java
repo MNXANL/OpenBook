@@ -17,6 +17,6 @@ public class Splash_screen extends Activity {
                 Intent intent = new Intent(Splash_screen.this, MainActivity.class);
                 startActivity(intent);
             }
-        }, 3000);
+        }, 500);
     }
 }
