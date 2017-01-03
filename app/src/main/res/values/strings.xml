@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Myapp</string>
+    <string name="titol">Títol</string>
+    <string name="autor">Autor</string>
+    <string name="editorial">Editorial</string>
+    <string name="any">Any de publicació</string>
+    <string name="categoria">Categoria</string>
+    <string name="val">Valoració</string>
+    <string name="action_settings">Afegeix infor...</string>
+    <string name="dataError">Error al accedir a les dades</string>
+    <!-- Opciones menu contextual-->
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="missatge1">S\'ha eliminat el llibre </string>
+
+</resources>
