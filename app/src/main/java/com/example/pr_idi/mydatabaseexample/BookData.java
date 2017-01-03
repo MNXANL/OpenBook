@@ -14,6 +14,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.pr_idi.mydatabaseexample.R.id.year;
+
 public class BookData {
 
     // Database fields
@@ -157,7 +159,7 @@ public class BookData {
         return books;
     }
 
-    public void UpdateBook (int id, String titol, String autor, String pub, String year, String cat,
+    public void UpdateBook (int id, String titol, String autor, String year, String pub, String cat,
                        String val){
         ContentValues cv = new ContentValues();
         cv.put(MySQLiteHelper.COLUMN_ID, id);
