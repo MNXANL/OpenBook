@@ -8,9 +8,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
+/*classe encarregada de controlar l'accés a la base de dades*/
 public class MySQLiteHelper extends SQLiteOpenHelper {
-
+    /*camps*/
     public static final String TABLE_BOOKS = "books";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TITLE = "title";
@@ -35,6 +35,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_PERSONAL_EVALUATION + " text"
             + ");";
 
+    /*constructor*/
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -52,5 +53,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKS);
         onCreate(db);
     }
+
 
 }

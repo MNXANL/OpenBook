@@ -65,9 +65,7 @@ public class Book {
         this.category = category;
     }
 
-    public String getPersonal_evaluation() {
-        return personal_evaluation;
-    }
+    public String getPersonal_evaluation() { return personal_evaluation; }
 
     public void setPersonal_evaluation(String personal_evaluation) {
         this.personal_evaluation = personal_evaluation;
