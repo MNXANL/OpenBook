@@ -1,13 +1,11 @@
 package com.example.pr_idi.mydatabaseexample;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,8 +35,9 @@ public class llista_categoria extends AppCompatActivity {
         categories.add("Young adult");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(),
-                android.R.layout.simple_list_item_1, categories);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, categories);
+
         final ListView milista = (ListView) findViewById(R.id.milista);
         milista.setAdapter(arrayAdapter);
         milista.setChoiceMode(milista.CHOICE_MODE_SINGLE);

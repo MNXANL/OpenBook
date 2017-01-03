@@ -7,23 +7,26 @@
             android:title="Documents"
             />
         <item
-            android:id="@+id/docs"
+            android:id="@+id/recent"
             android:icon="@drawable/edit"
             android:title="Recent"
             />
-    </group>
+
 
     <item android:title="Options">
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/about"
                     android:icon="@drawable/delete"
                     android:title="About" />
                 <item
+                    android:id="@+id/help"
                     android:icon="@drawable/delete"
                     android:title="Help" />
             </group>
         </menu>
     </item>
+    </group>
 
 </menu>

@@ -1,17 +1,8 @@
 package com.example.pr_idi.mydatabaseexample;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import android.app.ListActivity;
-import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
-import android.view.View;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,14 +13,14 @@ public class Activity_Item extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__item);
+        setContentView(R.layout.activity_listed_item);
         t = (TextView) findViewById(R.id.titol);
         autor = (TextView) findViewById(R.id.autor);
         publisher = (TextView) findViewById(R.id.pub);
         year = (TextView) findViewById(R.id.year);
         category = (TextView) findViewById(R.id.cat);
         val = (RatingBar) findViewById(R.id.ratingBar);
-        val.setEnabled(false); //no editable
+        val.setEnabled(false); //not editable
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){

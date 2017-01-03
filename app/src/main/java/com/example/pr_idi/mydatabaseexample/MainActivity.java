@@ -5,6 +5,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+
         //recycle view
         mrecView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mrecView.setLayoutManager(new LinearLayoutManager(this));
@@ -58,14 +61,17 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(drawerToggle);
 
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
+
         //clic al botó
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        /*floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //creo un nou llibre
                 Intent intent = new Intent(MainActivity.this, NewActivity.class);
             }
-        });
+        });*/
         //definim si l'scroll va cap amunt o cap avall
         Action scrollAction = new Action() {
             private boolean hidden = true;
@@ -74,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 if (hidden) {
                     hidden = false;
                     animate(floatingActionButton)
-                            .translationY(floatingActionButton.getHeight() +
-                                    getResources().getDimension(R.dimen.fab_margin))
+                            .translationY(floatingActionButton.getHeight() + getResources().getDimension(R.dimen.fab_margin))
                             .setInterpolator(new LinearInterpolator())
                             .setDuration(DURATION);
                 }
@@ -98,7 +103,9 @@ public class MainActivity extends AppCompatActivity {
         bookData.open();
 
         //agafo llibres ordenats per títol
-        inicialitza();
+
+        inicialitza(); //COMENTADO PARA QUE NO GENERE MIL LIBRITOS
+
         List<Book> values = bookData.getAllBooksbyTitol();
 
         //creo l'adapter
@@ -164,8 +171,12 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     public void inicialitza(){
-        String[] newBook = new String[] { "Miguel Strogoff", "Jules Verne", "Ulysses",
-                "James Joyce", "Don Quijote", "Miguel de Cervantes", "Metamorphosis", "Kafka" };
+        String[] newBook = new String[] {
+                "Miguel Strogoff", "Jules Verne",
+                "Ulysses", "James Joyce",
+                "Don Quijote", "Miguel de Cervantes",
+                "Metamorphosis", "Kafka"
+        };
         //Afegim els 4 llibres
         int i = 0;
         if (!bookData.ExistsTitle(newBook[i])) {
@@ -212,30 +223,25 @@ public class MainActivity extends AppCompatActivity {
             case R.id.edit:
                 //generem una nova activity ja inicialitzada amb els valors del llibre sel·leccionat
                 Intent intent = new Intent(MainActivity.this, Activity_Item.class);
-                intent.putExtra("mtitol", book.getTitle().toString());
-                intent.putExtra("mautor", book.getAuthor().toString());
-                intent.putExtra("mpublisher", book.getPublisher().toString());
+                intent.putExtra("mtitol", book.getTitle());
+                intent.putExtra("mautor", book.getAuthor());
+                intent.putExtra("mpublisher", book.getPublisher());
                 String y = String.valueOf(book.getYear());
                 intent.putExtra("myear", y);
-                intent.putExtra("mcategory", book.getCategory().toString());
-                String val = book.getPersonal_evaluation().toString();
+                intent.putExtra("mcategory", book.getCategory());
+                String val = book.getPersonal_evaluation();
                 float p = 0;
                 switch (val){ //segons la valoració hi hauran més o menys estrelles pintades
                     case "molt bo":
-                        p = 5;
-                        break;
+                        p = 5; break;
                     case "bo":
-                        p = 4;
-                        break;
+                        p = 4; break;
                     case "regular":
-                        p = 3;
-                        break;
+                        p = 3; break;
                     case "dolent":
-                        p = 2;
-                        break;
+                        p = 2; break;
                     case "molt dolent":
-                        p = 1;
-                        break;
+                        p = 1; break;
                 }
                 intent.putExtra("mval", p);
                 startActivity(intent);
@@ -250,13 +256,61 @@ public class MainActivity extends AppCompatActivity {
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
             default:
-                if (drawerToggle.onOptionsItemSelected(item)) {
-                    return true;
-                }
-                return super.onOptionsItemSelected(item);
+                return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
         }
     }
 
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    selectDrawerItem(menuItem);
+                    return true;
+                }
+            });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+        Class fragmentClass;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+
+        switch(menuItem.getItemId()) {
+            case R.id.docs:
+                fragmentManager.beginTransaction().replace(R.id.main_content, new FirstFragment()).commit();
+                break;
+            case R.id.recent:
+                //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
+                Intent i = new Intent(MainActivity.this, llista_categoria.class);
+                startActivity(i);
+                break;
+            case R.id.about:
+                //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
+                Intent ii = new Intent(MainActivity.this, Activity_Item.class);
+                startActivity(ii);
+                break;
+            case R.id.help:
+                fragmentManager.beginTransaction().replace(R.id.main_content, new FirstFragment()).commit();
+                break;
+        }
+        /*try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        // Insert the fragment by replacing any existing fragment
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
+    }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
@@ -283,16 +337,18 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    // Life cycle methods. Check whether it is necessary to reimplement them
 
+
+
+    // Life cycle methods. Check whether it is necessary to reimplement them
     @Override
     protected void onResume() {
         bookData.open();
         super.onResume();
     }
 
-    // Life cycle methods. Check whether it is necessary to reimplement them
 
+    // Life cycle methods. Check whether it is necessary to reimplement them
     @Override
     protected void onPause() {
         bookData.close();

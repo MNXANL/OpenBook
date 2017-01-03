@@ -11,6 +11,9 @@
     android:orientation="vertical"
     tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item">
 
+
+
+
     <EditText
         android:id="@+id/ntitol"
         android:textSize="18sp"

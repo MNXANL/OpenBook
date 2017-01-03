@@ -1,10 +1,9 @@
 package com.example.pr_idi.mydatabaseexample;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -16,6 +15,8 @@ public class NewActivity extends AppCompatActivity {
     private EditText any = null;
     private EditText categoria = null;
     private RatingBar star = null;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,12 @@ public class NewActivity extends AppCompatActivity {
         any = (EditText) findViewById(R.id.nyear);
         categoria = (EditText) findViewById(R.id.ncat);
         star = (RatingBar) findViewById(R.id.ratingBar);
+
+
+        toolbar = (Toolbar) findViewById(R.id.tbar);
+        setSupportActionBar(toolbar);
+        setTitle("New Activity");
+
         /*ActionBar mActionBar = getActionBar();
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
@@ -50,8 +57,8 @@ public class NewActivity extends AppCompatActivity {
             star.setRating(f);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
-
     }
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ncat: //si cliquem a categoria ens canviem d'activitat
@@ -59,6 +66,7 @@ public class NewActivity extends AppCompatActivity {
                 break;
         }
     }
+
     @Override   //guardem l'estat dels altres camps emplenats
     protected void onSaveInstanceState(Bundle guardarEstado) {
         super.onSaveInstanceState(guardarEstado);

@@ -26,7 +26,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity__item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_listed_item, parent, false);
         ItemViewHolder ivh = new ItemViewHolder(itemView);
         return ivh;
     }
@@ -43,10 +43,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         };
         holder.mtitol.setOnClickListener(listener);
         holder.mautor.setOnClickListener(listener);
-        holder.mpublisher.setOnClickListener(listener);
+        /*holder.mpublisher.setOnClickListener(listener);
         holder.myear.setOnClickListener(listener);
         holder.mcategory.setOnClickListener(listener);
-        holder.mval.setOnClickListener(listener);
+        holder.mval.setOnClickListener(listener);*/
 
     }
 
@@ -65,14 +65,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }*/
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
-        protected TextView mtitol;
-        protected TextView mautor;
-        protected TextView mpublisher;
-        protected TextView myear;
-        protected TextView mcategory;
-        protected RatingBar mval;
+        private TextView mtitol;
+        private TextView mautor;
+        private TextView mpublisher;
+        private TextView myear;
+        private TextView mcategory;
+        private RatingBar mval;
 
-        public ItemViewHolder(View itemView){
+        private ItemViewHolder(View itemView){
             super(itemView);
             mtitol = (TextView) itemView.findViewById(R.id.titol);
             mautor = (TextView) itemView.findViewById(R.id.autor);
@@ -82,16 +82,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             mval = (RatingBar) itemView.findViewById(R.id.ratingBar);
         }
 
-        public void bindEntry (Book b){
+        private void bindEntry (Book b){
             mtitol.setText(b.getTitle());
             mautor.setText(b.getAuthor());
-            mpublisher.setText(b.getPublisher());
+            /*mpublisher.setText(b.getPublisher());
             String y = String.valueOf(b.getYear());
             myear.setText( y ); //EXCEPTION!
             mcategory.setText(b.getCategory());
             //String val = b.getPersonal_evaluation(); //EXCEPTION!
             mval.setRating(3.5f);
-           /* switch (val){
+            switch (val){
                 case "molt bo":
                     mval.setRating(5.0f);
                     break;

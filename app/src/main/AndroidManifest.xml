@@ -2,11 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pr_idi.mydatabaseexample">
 
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="18" />
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-sdk android:minSdkVersion="7"  android:targetSdkVersion="18" />
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +26,6 @@
             android:theme="@style/MyTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,6 +40,7 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
@@ -43,6 +51,7 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.NewActivity" />
@@ -53,10 +62,15 @@
             <intent-filter>
                 <category android:name="android.intent.category." />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
         </activity>
+        <activity
+            android:name=".FirstFragment"
+            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
