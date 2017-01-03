@@ -17,20 +17,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+<<<<<<< HEAD
         android:hint="@string/titol"/>
+=======
+        android:hint="Títol"/>
+>>>>>>> 4046bac43c76db33d022d1b9e2af9a7151fc1d5d
     <EditText
         android:id="@+id/nautor"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+<<<<<<< HEAD
         android:hint="@string/autor"/>
+=======
+        android:hint="Autor"/>
+>>>>>>> 4046bac43c76db33d022d1b9e2af9a7151fc1d5d
     <EditText
         android:id="@+id/nyear"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:hint="@string/any"
+=======
+        android:hint="Any de publicació"
+>>>>>>> 4046bac43c76db33d022d1b9e2af9a7151fc1d5d
         android:layout_marginBottom="24dp"
         android:inputType="number"/>
     <EditText
@@ -39,14 +51,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+<<<<<<< HEAD
         android:hint="@string/editorial" />
+=======
+        android:hint="Editorial" />
+>>>>>>> 4046bac43c76db33d022d1b9e2af9a7151fc1d5d
     <EditText
         android:id="@+id/ncat"
         android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+<<<<<<< HEAD
         android:hint="@string/categoria" />
+=======
+        android:hint="Categoria" />
+>>>>>>> 4046bac43c76db33d022d1b9e2af9a7151fc1d5d
 
     <TextView
         android:id="@+id/nval"

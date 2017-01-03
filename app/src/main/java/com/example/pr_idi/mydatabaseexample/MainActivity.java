@@ -1,21 +1,37 @@
 package com.example.pr_idi.mydatabaseexample;
 
+import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
-
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import android.view.animation.LinearInterpolator;
 
 import static android.support.v4.view.ViewCompat.animate;
 
@@ -71,11 +87,9 @@ public class MainActivity extends AppCompatActivity {
         //creo la base de dades i omplo l'array amb tots els llibres
         bookData = new BookData(this);
         bookData.open();
-
         //agafo llibres ordenats per títol
         inicialitza();
         List<Book> values = bookData.getAllBooksbyTitol();
-
         //creo l'adapter
         adapter = new ItemAdapter(values);
         mrecView.setAdapter(adapter);
@@ -146,25 +160,25 @@ public class MainActivity extends AppCompatActivity {
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1876",
                     "Pierre-Jules Hetzel", "Aventura", "molt bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1922",
                     "Sylvia Beach", "Clàssic", "bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1605",
                     "Francisco de Robles", "Clàssic", "molt bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1915",
                     "Kurt Wolff", "Humor", "bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
     }
     //context menu actuarà sobre el recycle view

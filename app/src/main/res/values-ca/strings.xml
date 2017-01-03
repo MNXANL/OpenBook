@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">La Meva BD de Llibres</string>
+    <string name="action_help">Ajuda!</string>
+    <string name="action_settings">Preferències</string>
+    <string name="insert">Afegir entrada</string>
+    <string name="delete">Esborrar 1er</string>
+    <string name="about_title">Sobre la app…</string>
+    <string name="about_content">Desenvolupat per Marta Barroso i Miguel Moreno pel ProjecteLab de IDI de Tardor 2016.</string>
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <!-- Here lies everything related to the NavDrawer -->
+    <string name="navigation_drawer_open">Obrir navigation drawer</string>
+    <string name="navigation_drawer_close">Tancar navigation drawer</string>
+</resources>
