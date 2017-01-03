@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting toolbar and drawer
         toolbar = (Toolbar) findViewById(R.id.tbar);
-
+        setTitle("MyBookDB | Main Menu");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("MyBookDB");
+        getSupportActionBar().setDisplayShowHomeEnabled(true); //Burger
+
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = setupDrawerToggle();
@@ -64,14 +64,16 @@ public class MainActivity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
-        //clic al botó
-        /*floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        //clic al FloatingActionBtton
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //creo un nou llibre
                 Intent intent = new Intent(MainActivity.this, NewActivity.class);
+                startActivity(intent);
             }
-        });*/
+        });
+
         //definim si l'scroll va cap amunt o cap avall
         Action scrollAction = new Action() {
             private boolean hidden = true;
@@ -182,28 +184,28 @@ public class MainActivity extends AppCompatActivity {
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1876",
                     "Pierre-Jules Hetzel", "Aventura", "molt bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1922",
                     "Sylvia Beach", "Clàssic", "bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1605",
                     "Francisco de Robles", "Clàssic", "molt bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
         i += 2;
         if (!bookData.ExistsTitle(newBook[i])) {
             Book book = bookData.createBook(newBook[i], newBook[i + 1], "1915",
                     "Kurt Wolff", "Humor", "bo");
-            //adapter.add(book);
+            adapter.add(book);
         }
     }
-    //context menu actuarà sobre el recycle view
+    //context menu actuarà sobre el recycler view
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         int id = v.getId();
@@ -212,9 +214,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.my_recycler_view:
                 inflater.inflate(R.menu.context_menu, menu);
                 break;
-
         }
     }
+
     //clic sobre elements del context menu
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -283,9 +285,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.main_content, new FirstFragment()).commit();
                 break;
             case R.id.recent:
-                //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
-                Intent i = new Intent(MainActivity.this, llista_categoria.class);
-                startActivity(i);
+                fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
                 break;
             case R.id.about:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();

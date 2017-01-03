@@ -208,9 +208,9 @@ public class BookData {
     }
     public boolean ExistsTitle(String title) {
         String Query = "Select * from " + MySQLiteHelper.TABLE_BOOKS + " where " +
-                MySQLiteHelper.COLUMN_TITLE + " = ' " + title + " ' ; ";
+                MySQLiteHelper.COLUMN_TITLE + " = '" + title + "' ; ";
         Cursor cursor = database.rawQuery(Query, null);
-        if(cursor.getCount() <= 0){
+        if(cursor.getCount() == 0){
             cursor.close();
             return false;
         }

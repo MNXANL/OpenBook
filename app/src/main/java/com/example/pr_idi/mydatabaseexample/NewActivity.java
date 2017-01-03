@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 public class NewActivity extends AppCompatActivity {
     private EditText titol = null;
@@ -30,16 +31,10 @@ public class NewActivity extends AppCompatActivity {
 
 
         toolbar = (Toolbar) findViewById(R.id.tbar);
+        setTitle("MyBookDB | New Book"); //Esto por alguna razón no pasa
         setSupportActionBar(toolbar);
-        setTitle("New Activity");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
 
-        /*ActionBar mActionBar = getActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-        View mCustomView = mInflater.inflate(R.layout.activity_new_item, null);
-        mActionBar.setCustomView(mCustomView);
-        mActionBar.setDisplayShowCustomEnabled(true);*/
 
         //si tornem d'una altra activitat restaurem l'estat
         if(savedInstanceState != null){
@@ -56,15 +51,23 @@ public class NewActivity extends AppCompatActivity {
             Float f = savedInstanceState.getFloat("star");
             star.setRating(f);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ncat: //si cliquem a categoria ens canviem d'activitat
                 Intent categories = new Intent(NewActivity.this, llista_categoria.class);
+                startActivity(categories);
                 break;
+            /*case R.id.NewBookButton: //Pulsar botón para añadir el libro a la BD
+                addBooks();
+                break;*/
         }
+    }
+
+    private void addBooks() {
+
+        Toast.makeText(getApplicationContext(), "The book <" + titol + "> has been added." ,Toast.LENGTH_SHORT);
     }
 
     @Override   //guardem l'estat dels altres camps emplenats

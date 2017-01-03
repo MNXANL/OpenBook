@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 /*Mostra un elem del recycler view resultat d'haver fet clic (sense permisos de modificació)*/
 public class Activity_Item extends AppCompatActivity {
-    private TextView t, autor, publisher, year, category;
-    private RatingBar val;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView t, autor, publisher, year, category;
+        RatingBar val;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listed_item);
         t = (TextView) findViewById(R.id.titol);
