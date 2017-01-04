@@ -9,7 +9,7 @@
     <string name="action_settings">Afegeix infor...</string>
     <string name="dataError">Error al accedir a les dades</string>
     <!-- Opciones menu contextual-->
-    <string name="edit">Editar</string>
+    <string name="edit">Editar valoració</string>
     <string name="delete">Eliminar</string>
     <string name="missatge1">S\'ha eliminat el llibre </string>
 
@@ -17,4 +17,10 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_first_fragment">FirstFragment</string>
     <string name="num">5</string>
+    <string name="search">Search</string>
+    <string name="documents">Documents</string>
+    <string name="recent">Recent</string>
+    <string name="about">About</string>
+    <string name="options">Options</string>
+    <string name="help">Help</string>
 </resources>

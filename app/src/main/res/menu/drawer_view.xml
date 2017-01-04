@@ -4,26 +4,26 @@
         <item
             android:id="@+id/docs"
             android:icon="@drawable/edit"
-            android:title="Documents"
+            android:title="@string/documents"
             />
         <item
             android:id="@+id/recent"
             android:icon="@drawable/edit"
-            android:title="Recent"
+            android:title="@string/recent"
             />
 
 
-    <item android:title="Options">
+    <item android:title="@string/options">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/about"
                     android:icon="@drawable/delete"
-                    android:title="About" />
+                    android:title="@string/about" />
                 <item
                     android:id="@+id/help"
                     android:icon="@drawable/delete"
-                    android:title="Help" />
+                    android:title="@string/help" />
             </group>
         </menu>
     </item>

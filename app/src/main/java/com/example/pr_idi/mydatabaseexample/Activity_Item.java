@@ -14,14 +14,14 @@ public class Activity_Item extends AppCompatActivity {
         RatingBar val;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listed_item);
+        setContentView(R.layout.activity_full_item);
         t = (TextView) findViewById(R.id.titol);
         autor = (TextView) findViewById(R.id.autor);
         publisher = (TextView) findViewById(R.id.pub);
         year = (TextView) findViewById(R.id.year);
         category = (TextView) findViewById(R.id.cat);
         val = (RatingBar) findViewById(R.id.ratingBar);
-        val.setEnabled(false); //not editable
+        //val.setEnabled(false); //not editable
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){

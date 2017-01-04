@@ -8,14 +8,17 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +26,18 @@ import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v4.view.ViewCompat.animate;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private BookData bookData;
     private RecyclerView mrecView;
     private ItemAdapter adapter;
     private FloatingActionButton floatingActionButton;
     private static final int DURATION = 150;
-    private static final int VERTICAL_ITEM_SPACE = 48;
+    private List<Book> values;
 
     private NavigationView nvDrawer;
     private DrawerLayout mDrawer;
@@ -51,10 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Setting toolbar and drawer
         toolbar = (Toolbar) findViewById(R.id.tbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("MyBookDB");
+        setTitle("My Book DB");
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = setupDrawerToggle();
@@ -64,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         //clic al botó
-        /*floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //creo un nou llibre
                 Intent intent = new Intent(MainActivity.this, NewActivity.class);
+                startActivity(intent);
             }
-        });*/
+        });
+
         //definim si l'scroll va cap amunt o cap avall
         Action scrollAction = new Action() {
             private boolean hidden = true;
@@ -98,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
         bookData.open();
 
         //agafo llibres ordenats per títol
-        //inicialitza(); //COMENTADO PARA QUE NO GENERE MIL LIBRITOS
+        inicialitza();
 
-        List<Book> values = bookData.getAllBooksbyTitol();
+        values = bookData.getAllBooksbyTitol();
 
         //creo l'adapter
         adapter = new ItemAdapter(values);
@@ -115,16 +120,20 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new com.example.pr_idi.mydatabaseexample.OnItemClickListener() {
             @Override
             public void onItemClick(Book item) {
+            /**
+             *      CAMBIAR TOAST POR CONTEXTMENU
+             *
+             *
+             */
                 Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
-                /*Book book = (Book) getListAdapter().getItem(mrecView.getChildAdapterPosition(v));
                 Intent i = new Intent(MainActivity.this, Activity_Item.class);
-                i.putExtra("mtitol", book.getTitle());
-                i.putExtra("mautor", book.getAuthor());
-                i.putExtra("myear", book.getYear());
-                i.putExtra("mpublisher", book.getPublisher());
-                i.putExtra("mcategory", book.getCategory());
-                i.putExtra("mval", book.getPersonal_evaluation());
-                startActivity(i);*/
+                i.putExtra("mtitol", item.getTitle());
+                i.putExtra("mautor", item.getAuthor());
+                i.putExtra("myear", item.getYear());
+                i.putExtra("mpublisher", item.getPublisher());
+                i.putExtra("mcategory", item.getCategory());
+                i.putExtra("mval", item.getPersonal_evaluation());
+                startActivity(i);
             }
         });
         //li associo el context menu
@@ -136,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Will be called via the onClick attribute
     // of the buttons in main.xml
+
     /*public void onClick(View view) {
         @SuppressWarnings("unchecked")
         //ArrayAdapter<Book> adapter = (ArrayAdapter<Book>) getListAdapter();
@@ -144,15 +154,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.add:
                 Intent i = new Intent(MainActivity.this, Activity_Item.class);
                 startActivityForResult(i, NEW_ITEM);
-
                 String[] newBook = new String[] { "Miguel Strogoff", "Jules Verne", "Ulysses", "James Joyce", "Don Quijote", "Miguel de Cervantes", "Metamorphosis", "Kafka" };
                 int nextInt = new Random().nextInt(4);
                 // save the new book to the database
                 book = bookData.createBook(newBook[nextInt*2], newBook[nextInt*2 + 1]);
 
                 // After I get the book data, I add it to the adapter
-                //adapter.add(book);
-                //break;
+                //adapter.add(book);                //break;
            case R.id.delete:
                 if (getListAdapter().getCount() > 0) {
                     book = (Book) getListAdapter().getItem(0);
@@ -161,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case default:
-
                 break;
         }
         adapter.notifyDataSetChanged();
@@ -169,34 +176,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void inicialitza(){
         String[] newBook = new String[] {
-                "Miguel Strogoff", "Jules Verne",
-                "Ulysses", "James Joyce",
-                "Don Quijote", "Miguel de Cervantes",
-                "Metamorphosis", "Kafka"
+                "Miguel Strogoff", "Jules Verne",     "1876", "Pierre-Jules Hetzel", "Aventura", "molt bo",
+                "Ulysses", "James Joyce",             "1922", "Sylvia Beach", "Clàssic", "bo",
+                "Don Quijote", "Miguel de Cervantes", "1605", "Francisco de Robles", "Clàssic", "molt bo",
+                "Metamorphosis", "Kafka",             "1915", "Kurt Wolff", "Humor", "bo"
         };
         //Afegim els 4 llibres
         int i = 0;
         if (!bookData.ExistsTitle(newBook[i])) {
-            Book book = bookData.createBook(newBook[i], newBook[i + 1], "1876",
-                    "Pierre-Jules Hetzel", "Aventura", "molt bo");
+            //Book book =
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
             //adapter.add(book);
         }
-        i += 2;
+        i += 6;
         if (!bookData.ExistsTitle(newBook[i])) {
-            Book book = bookData.createBook(newBook[i], newBook[i + 1], "1922",
-                    "Sylvia Beach", "Clàssic", "bo");
+            //Book book =
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
             //adapter.add(book);
         }
-        i += 2;
+        i += 6;
         if (!bookData.ExistsTitle(newBook[i])) {
-            Book book = bookData.createBook(newBook[i], newBook[i + 1], "1605",
-                    "Francisco de Robles", "Clàssic", "molt bo");
+            //Book book =
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
             //adapter.add(book);
         }
-        i += 2;
+        i += 6;
         if (!bookData.ExistsTitle(newBook[i])) {
-            Book book = bookData.createBook(newBook[i], newBook[i + 1], "1915",
-                    "Kurt Wolff", "Humor", "bo");
+            //Book book =
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
             //adapter.add(book);
         }
     }
@@ -209,26 +216,65 @@ public class MainActivity extends AppCompatActivity {
             case R.id.my_recycler_view:
                 inflater.inflate(R.menu.context_menu, menu);
                 break;
-
         }
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        query = query.toLowerCase();
+        ArrayList<Book> newList = new ArrayList<>();
+        for (Book b: values){
+            String author = b.getAuthor().toLowerCase();
+            if (author.contains(query)) {
+                newList.add(b);
+            }
+        }
+        adapter.setFilter(newList);
+        return true;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+        //getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
     //clic sobre elements del context menu
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Book book = (Book) adapter.getOnItemClickListener();
+        //Book book = (Book) adapter.getOnItemClickListener();
+
+        // placeholder values
+        Book book = new Book();
+        book.setTitle("A");
+        book.setAuthor("B");
+        book.setPublisher("C");
+        book.setYear(1991);
+        book.setCategory("Horror");
+        book.setPersonal_evaluation("bo");
+
         switch (item.getItemId()) {
             case R.id.edit:
                 //generem una nova activity ja inicialitzada amb els valors del llibre sel·leccionat
                 Intent intent = new Intent(MainActivity.this, Activity_Item.class);
+                //*
                 intent.putExtra("mtitol", book.getTitle());
                 intent.putExtra("mautor", book.getAuthor());
                 intent.putExtra("mpublisher", book.getPublisher());
                 String y = String.valueOf(book.getYear());
                 intent.putExtra("myear", y);
                 intent.putExtra("mcategory", book.getCategory());
-                String val = book.getPersonal_evaluation();
+                //String val = book.getPersonal_evaluation();
                 float p = 0;
-                switch (val){ //segons la valoració hi hauran més o menys estrelles pintades
+               /* switch (val){ //segons la valoració hi hauran més o menys estrelles pintades
                     case "molt bo":
                         p = 5; break;
                     case "bo":
@@ -240,12 +286,13 @@ public class MainActivity extends AppCompatActivity {
                     case "molt dolent":
                         p = 1; break;
                 }
-                intent.putExtra("mval", p);
+                intent.putExtra("mval", 4);
+                */
                 startActivity(intent);
                 return true;
             case R.id.delete:
                 //cal ficar l'operacio borrar
-                bookData.deleteBook(book);
+                //bookData.deleteBook(book);
                 Toast t = Toast.makeText(getApplicationContext(),"@string/missatge1",Toast.LENGTH_SHORT);
                 t.show();
                 return true;

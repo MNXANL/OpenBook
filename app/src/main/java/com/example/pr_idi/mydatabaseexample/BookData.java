@@ -48,6 +48,7 @@ public class BookData {
         // Must modify the method to add the full data
         values.put(MySQLiteHelper.COLUMN_TITLE, title);
         values.put(MySQLiteHelper.COLUMN_AUTHOR, author);
+
         // Invented data
         values.put(MySQLiteHelper.COLUMN_PUBLISHER, publisher);
         values.put(MySQLiteHelper.COLUMN_YEAR,year);
@@ -55,14 +56,12 @@ public class BookData {
         values.put(MySQLiteHelper.COLUMN_PERSONAL_EVALUATION, val);
 
         // Actual insertion of the data using the values variable
-        long insertId = database.insert(MySQLiteHelper.TABLE_BOOKS, null,
-                values);
+        long insertId = database.insert(MySQLiteHelper.TABLE_BOOKS, null, values);
 
         // Main activity calls this procedure to create a new book
         // and uses the result to update the listview.
         // Therefore, we need to get the data from the database
-        // (you can use this as a query example)
-        // to feed the view.
+        // (you can use this as a query example) to feed the view.
 
         Cursor cursor = database.query(MySQLiteHelper.TABLE_BOOKS,
                 allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
@@ -80,8 +79,7 @@ public class BookData {
     public void deleteBook(Book book) {
         long id = book.getId();
         System.out.println("Book deleted with id: " + id);
-        database.delete(MySQLiteHelper.TABLE_BOOKS, MySQLiteHelper.COLUMN_ID
-                + " = " + id, null);
+        database.delete(MySQLiteHelper.TABLE_BOOKS, MySQLiteHelper.COLUMN_ID + " = " + id, null);
     }
 
     public List<Book> getAllBooks() {
@@ -100,6 +98,8 @@ public class BookData {
         cursor.close();
         return books;
     }
+
+
     public List<Book> getAllBooksbyTitol() {
         List<Book> books = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
@@ -116,7 +116,8 @@ public class BookData {
     }
     public List<Book> getAllBooksbyAutor() {
         List<Book> books = new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
+        Cursor cursor = database.rawQuery(
+                "SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
                 " ORDER BY " + MySQLiteHelper.COLUMN_AUTHOR + " DESC", new String[]{});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -180,6 +181,7 @@ public class BookData {
                 + "= ?", new String[]{Integer.toString(id)});
         return cursorToBook(c);
     }
+
     private Book cursorToBook(Cursor cursor) {
         Book book = new Book();
         book.setId(cursor.getLong(0));
@@ -187,17 +189,18 @@ public class BookData {
         book.setAuthor(cursor.getString(2));
         return book;
     }
+
     public boolean ExistsBook(Book b) {
         String titol = b.getTitle();
         String autor = b.getAuthor();
         int any = b.getYear();
         String editorial = b.getPublisher();
         String categoria = b.getCategory();
-        String Query = "Select * from " + MySQLiteHelper.TABLE_BOOKS + " where " +
-                MySQLiteHelper.COLUMN_TITLE + " = " + titol + " and " + MySQLiteHelper.COLUMN_AUTHOR
-                + " = " + autor + " and " + MySQLiteHelper.COLUMN_YEAR + " = " + any + " and " +
-                MySQLiteHelper.COLUMN_PUBLISHER + " = " + editorial + " and " +
-                MySQLiteHelper.COLUMN_CATEGORY + " = " + categoria;
+        String Query = "SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS + " WHERE " +
+                MySQLiteHelper.COLUMN_TITLE + " = '" + titol + "' AND " + MySQLiteHelper.COLUMN_AUTHOR
+                + " = '" + autor + "' AND " + MySQLiteHelper.COLUMN_YEAR + " = '" + any + "' AND " +
+                MySQLiteHelper.COLUMN_PUBLISHER + " = '" + editorial + "' AND " +
+                MySQLiteHelper.COLUMN_CATEGORY + " = '" + categoria + "' ;";
         Cursor cursor = database.rawQuery(Query, null);
         if(cursor.getCount() <= 0){
             cursor.close();

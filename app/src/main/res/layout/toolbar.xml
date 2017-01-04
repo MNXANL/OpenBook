@@ -9,5 +9,5 @@
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:background="?attr/colorPrimaryDark"
-    app:title="MyBookDB">
+    >
 </android.support.v7.widget.Toolbar>

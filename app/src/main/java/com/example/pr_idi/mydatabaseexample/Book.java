@@ -17,6 +17,7 @@ public class Book {
     private String category;
     private String personal_evaluation;
 
+
     public long getId() {
         return id;
     }
