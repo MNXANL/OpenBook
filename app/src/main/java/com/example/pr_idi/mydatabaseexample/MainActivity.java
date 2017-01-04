@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.main);
         //recycle view
         mrecView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -105,10 +107,42 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //agafo llibres ordenats per títol
         inicialitza();
 
-        values = bookData.getAllBooksbyTitol();
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            //if(savedInstanceState != null){
+            //mirar si no existe el libro ya, si existe imprimir mensaje de error en un toast
+            Toast.makeText(getBaseContext(),"Potser afegeixo un llibre" , Toast.LENGTH_SHORT).show();
+
+            Book nou = new Book();
+            nou.setTitle(extras.getString("titol"));
+            nou.setAuthor(extras.getString("autor"));
+            String any = extras.getString("any");
+            int any_enter = /*Integer.parseInt(any);*/ 1984;
+            nou.setYear(any_enter);
+            nou.setPublisher(extras.getString("editorial"));
+            nou.setCategory(extras.getString("categoria"));
+            nou.setPersonal_evaluation(extras.getString("valoracio"));
+            if (!bookData.ExistsBook(nou)) {
+                bookData.createBook(nou.getTitle(), nou.getAuthor(),
+                        String.valueOf(nou.getYear()), nou.getPublisher(),
+                        nou.getCategory(), nou.getPersonal_evaluation());
+                //adapter.add(nou);
+
+
+                //missatge de confirmacio
+                Toast.makeText(getBaseContext(), "S'ha afegit el llibre " + nou.getTitle(),  Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getBaseContext(), "El llibre " + nou.getTitle() +" ja existeix", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        values = bookData.getAllBooksbyCategoria();
 
         //creo l'adapter
-        adapter = new ItemAdapter(values);
+        adapter = new ItemAdapter(values, this);
+
         mrecView.setAdapter(adapter);
         mrecView.setItemAnimator(new DefaultItemAnimator());
 
@@ -117,14 +151,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mrecView.addItemDecoration(new DividerItemDecoration(this));
 
         //si faig clic algun element de la llista
-        adapter.setOnItemClickListener(new com.example.pr_idi.mydatabaseexample.OnItemClickListener() {
+        /*adapter.setOnItemClickListener(new com.example.pr_idi.mydatabaseexample.OnItemClickListener() {
             @Override
             public void onItemClick(Book item) {
-            /**
-             *      CAMBIAR TOAST POR CONTEXTMENU
-             *
-             *
-             */
+            /** CAMBIAR TOAST POR CONTEXTMENU
+             * /
                 Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_LONG).show();
                 Intent i = new Intent(MainActivity.this, Activity_Item.class);
                 i.putExtra("mtitol", item.getTitle());
@@ -135,44 +166,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 i.putExtra("mval", item.getPersonal_evaluation());
                 startActivity(i);
             }
-        });
+        });*/
         //li associo el context menu
        registerForContextMenu(mrecView);
        adapter.notifyDataSetChanged();
     }
-    // Basic method to add pseudo-random list of books so that
-    // you have an example of insertion and deletion
 
-    // Will be called via the onClick attribute
-    // of the buttons in main.xml
+    @Override
+    private void startActivityForResult() {
 
-    /*public void onClick(View view) {
-        @SuppressWarnings("unchecked")
-        //ArrayAdapter<Book> adapter = (ArrayAdapter<Book>) getListAdapter();
-        Book book;
-        switch (view.getId()) {
-            case R.id.add:
-                Intent i = new Intent(MainActivity.this, Activity_Item.class);
-                startActivityForResult(i, NEW_ITEM);
-                String[] newBook = new String[] { "Miguel Strogoff", "Jules Verne", "Ulysses", "James Joyce", "Don Quijote", "Miguel de Cervantes", "Metamorphosis", "Kafka" };
-                int nextInt = new Random().nextInt(4);
-                // save the new book to the database
-                book = bookData.createBook(newBook[nextInt*2], newBook[nextInt*2 + 1]);
-
-                // After I get the book data, I add it to the adapter
-                //adapter.add(book);                //break;
-           case R.id.delete:
-                if (getListAdapter().getCount() > 0) {
-                    book = (Book) getListAdapter().getItem(0);
-                    bookData.deleteBook(book);
-                    adapter.remove(book);
-                }
-                break;
-            case default:
-                break;
-        }
-        adapter.notifyDataSetChanged();
-    }*/
+    }
 
     public void inicialitza(){
         String[] newBook = new String[] {
@@ -275,16 +278,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 //String val = book.getPersonal_evaluation();
                 float p = 0;
                /* switch (val){ //segons la valoració hi hauran més o menys estrelles pintades
-                    case "molt bo":
-                        p = 5; break;
-                    case "bo":
-                        p = 4; break;
-                    case "regular":
-                        p = 3; break;
-                    case "dolent":
-                        p = 2; break;
-                    case "molt dolent":
-                        p = 1; break;
+                    case "molt bo": p = 5; break;
+                    case "bo": p = 4; break;
+                    case "regular": p = 3; break;
+                    case "dolent": p = 2; break;
+                    case "molt dolent": p = 1; break;
                 }
                 intent.putExtra("mval", 4);
                 */
@@ -298,6 +296,24 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 return true;
             case R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
+                return true;
+
+            //New cases
+            case R.id.otitol:
+                Toast t2 = Toast.makeText(getApplicationContext(),"ordenar per titol",Toast.LENGTH_SHORT);
+                t2.show();
+                return true;
+            case R.id.oautor:
+                Toast t3 = Toast.makeText(getApplicationContext(),"ordenar per autor",Toast.LENGTH_SHORT);
+                t3.show();
+                return true;
+            case R.id.oyear:
+                Toast t4 = Toast.makeText(getApplicationContext(),"ordenar per any",Toast.LENGTH_SHORT);
+                t4.show();
+                return true;
+            case R.id.ocat:
+                Toast t5 = Toast.makeText(getApplicationContext(),"ordenar per categoria",Toast.LENGTH_SHORT);
+                t5.show();
                 return true;
             default:
                 return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -321,51 +337,37 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Class fragmentClass;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-
         switch(menuItem.getItemId()) {
             case R.id.docs:
-                fragmentManager.beginTransaction().replace(R.id.main_content, new FirstFragment()).commit();
+               // fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
+                Intent iq = new Intent(MainActivity.this, NewActivity.class); startActivity(iq);
                 break;
             case R.id.recent:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
-                Intent i = new Intent(MainActivity.this, llista_categoria.class);
-                startActivity(i);
+                Intent i = new Intent(MainActivity.this, llista_categoria.class); startActivity(i);
                 break;
             case R.id.about:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
-                Intent ii = new Intent(MainActivity.this, Activity_Item.class);
-                startActivity(ii);
+                fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
                 break;
             case R.id.help:
-                fragmentManager.beginTransaction().replace(R.id.main_content, new FirstFragment()).commit();
+                Intent ii = new Intent(MainActivity.this, HelpActivity.class); startActivity(ii);
                 break;
         }
-        /*try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
         // Insert the fragment by replacing any existing fragment
-
         // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
         // Set action bar title
-        setTitle(menuItem.getTitle());
         // Close the navigation drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
-        // and will not render the hamburger icon without it.
         return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
 
     // `onPostCreate` called when activity start-up is complete after `onStart()`
-    // NOTE 1: Make sure to override the method with only a single `Bundle` argument
-    // Note 2: Make sure you implement the correct `onPostCreate(Bundle savedInstanceState)` method.
-    // There are 2 signatures and only `onPostCreate(Bundle state)` shows the hamburger icon.
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -381,9 +383,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-
-
-
     // Life cycle methods. Check whether it is necessary to reimplement them
     @Override
     protected void onResume() {
@@ -391,12 +390,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onResume();
     }
 
-
-    // Life cycle methods. Check whether it is necessary to reimplement them
     @Override
     protected void onPause() {
         bookData.close();
         super.onPause();
     }
-
 }

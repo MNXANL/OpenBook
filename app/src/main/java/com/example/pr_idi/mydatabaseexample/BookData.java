@@ -63,9 +63,15 @@ public class BookData {
         // Therefore, we need to get the data from the database
         // (you can use this as a query example) to feed the view.
 
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_BOOKS,
-                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
+        Cursor cursor = database.query(
+                MySQLiteHelper.TABLE_BOOKS, allColumns,
+                MySQLiteHelper.COLUMN_ID + " = " + insertId,
+                null,
+                null,
+                null,
+                null
+        );
+
         cursor.moveToFirst();
         Book newBook = cursorToBook(cursor);
 
@@ -85,8 +91,15 @@ public class BookData {
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
 
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_BOOKS,
-                allColumns, null, null, null, null, null);
+        Cursor cursor = database.query(
+                MySQLiteHelper.TABLE_BOOKS,
+                allColumns,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -118,7 +131,7 @@ public class BookData {
         List<Book> books = new ArrayList<>();
         Cursor cursor = database.rawQuery(
                 "SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
-                " ORDER BY " + MySQLiteHelper.COLUMN_AUTHOR + " DESC", new String[]{});
+                        " ORDER BY " + MySQLiteHelper.COLUMN_AUTHOR + " DESC", new String[]{});
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Book book = cursorToBook(cursor);
@@ -159,7 +172,7 @@ public class BookData {
     }
 
     public void UpdateBook (int id, String titol, String autor, String year, String pub, String cat,
-                       String val){
+                            String val){
         ContentValues cv = new ContentValues();
         cv.put(MySQLiteHelper.COLUMN_ID, id);
         cv.put(MySQLiteHelper.COLUMN_TITLE, titol);
@@ -174,19 +187,27 @@ public class BookData {
 
     public Book getItem(int id){
         Cursor c = database.rawQuery(" select " + MySQLiteHelper.COLUMN_ID + "," +
-                MySQLiteHelper.COLUMN_TITLE + "," + MySQLiteHelper.COLUMN_AUTHOR + "," +
+                "title, author, publisher, year, category, val"
+               /* MySQLiteHelper.COLUMN_TITLE + "," + MySQLiteHelper.COLUMN_AUTHOR + "," +
                 MySQLiteHelper.COLUMN_PUBLISHER + "," + MySQLiteHelper.COLUMN_YEAR + "," +
-                MySQLiteHelper.COLUMN_CATEGORY + "," + MySQLiteHelper.COLUMN_PERSONAL_EVALUATION
+                MySQLiteHelper.COLUMN_CATEGORY + "," + MySQLiteHelper.COLUMN_PERSONAL_EVALUATION*/
                 + " from" + MySQLiteHelper.TABLE_BOOKS + " where " + MySQLiteHelper.COLUMN_ID
                 + "= ?", new String[]{Integer.toString(id)});
         return cursorToBook(c);
     }
 
-    private Book cursorToBook(Cursor cursor) {
+
+     private Book cursorToBook(Cursor cursor) {
         Book book = new Book();
         book.setId(cursor.getLong(0));
         book.setTitle(cursor.getString(1));
         book.setAuthor(cursor.getString(2));
+        book.setPublisher(cursor.getString(3));
+        String year = cursor.getString(4);
+        int year2 = Integer.parseInt(year);
+        book.setYear(year2);
+        book.setCategory(cursor.getString(5));
+        book.setPersonal_evaluation(cursor.getString(6));
         return book;
     }
 
@@ -196,28 +217,33 @@ public class BookData {
         int any = b.getYear();
         String editorial = b.getPublisher();
         String categoria = b.getCategory();
-        String Query = "SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS + " WHERE " +
-                MySQLiteHelper.COLUMN_TITLE + " = '" + titol + "' AND " + MySQLiteHelper.COLUMN_AUTHOR
-                + " = '" + autor + "' AND " + MySQLiteHelper.COLUMN_YEAR + " = '" + any + "' AND " +
-                MySQLiteHelper.COLUMN_PUBLISHER + " = '" + editorial + "' AND " +
-                MySQLiteHelper.COLUMN_CATEGORY + " = '" + categoria + "' ;";
+        String Query = "SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
+                " WHERE title = '" + titol +
+                "' AND author = '" + autor +  "' ;";
+                /*"' AND " + MySQLiteHelper.COLUMN_YEAR + " = '" + any +
+                "' AND " + MySQLiteHelper.COLUMN_PUBLISHER + " = '" + editorial +
+                "' AND " + MySQLiteHelper.COLUMN_CATEGORY + " = '" + categoria + "' ;";*/
         Cursor cursor = database.rawQuery(Query, null);
         if(cursor.getCount() <= 0){
             cursor.close();
             return false;
         }
-        cursor.close();
-        return true;
+        else {
+            cursor.close();
+            return true;
+        }
     }
+
     public boolean ExistsTitle(String title) {
-        String Query = "Select * from " + MySQLiteHelper.TABLE_BOOKS + " where " +
-                MySQLiteHelper.COLUMN_TITLE + " = '" + title + "' ; ";
-        Cursor cursor = database.rawQuery(Query, null);
-        if(cursor.getCount() == 0){
+        String[] args = new String[] {title};
+        Cursor cursor = database.rawQuery(" SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS + " WHERE " + MySQLiteHelper.COLUMN_TITLE + " = ? ", args);
+        if (cursor.getCount() <= 0){
             cursor.close();
             return false;
         }
-        cursor.close();
-        return true;
+        else {
+            cursor.close();
+            return true;
+        }
     }
 }

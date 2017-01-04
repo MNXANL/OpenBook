@@ -5,21 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.pr_idi.mydatabaseexample.FirstFragment">
+    android:background="@color/background_material_light"
+    tools:context="com.example.pr_idi.mydatabaseexample.AboutFragment">
 
     <TextView
-        android:text="sadflhadsfjklashfdjhadskjlfhjasdhfklj dsahfljkdsahfjkl shad fjkdsah fuidsahfuonsdabufsdaiu fuasdf sdaif hudsahfueasluf haseuhf euahf ulawefhwfkelsaTextView"
+        android:text="MyBookDatabase is an app developed by Marta Barroso and Miguel Moreno for IDI (Autumn semester, 2016/17)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="78dp"
-        android:layout_height="159dp"
+        android:id="@+id/textView2"
+        android:gravity="center_vertical"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center_vertical|center_horizontal" />
+        android:textAlignment="center" />
 
 </FrameLayout>

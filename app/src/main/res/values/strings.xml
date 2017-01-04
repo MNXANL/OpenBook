@@ -5,11 +5,12 @@
     <string name="editorial">Editorial</string>
     <string name="any">Any de publicació</string>
     <string name="categoria">Categoria</string>
+    <string name="seleccio">Selecciona una categoria</string>
     <string name="val">Valoració</string>
     <string name="action_settings">Afegeix infor...</string>
     <string name="dataError">Error al accedir a les dades</string>
     <!-- Opciones menu contextual-->
-    <string name="edit">Editar valoració</string>
+    <string name="edit">Editar</string>
     <string name="delete">Eliminar</string>
     <string name="missatge1">S\'ha eliminat el llibre </string>
 
@@ -17,10 +18,22 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_first_fragment">FirstFragment</string>
     <string name="num">5</string>
-    <string name="search">Search</string>
-    <string name="documents">Documents</string>
-    <string name="recent">Recent</string>
-    <string name="about">About</string>
-    <string name="options">Options</string>
-    <string name="help">Help</string>
+    <string-array name="categories">
+        <item>Aventura</item>
+        <item>Autoajuda</item>
+        <item>Ciència ficció</item>
+        <item>Clàssic</item>
+        <item>Fantasia</item>
+        <item>Humor</item>
+        <item>Misteri</item>
+        <item>Novel·la biogràfica</item>
+        <item>Novel·la gràfica</item>
+        <item>Novel·la històrica</item>
+        <item>Novel·la negra</item>
+        <item>Novel·la policíaca i terror</item>
+        <item>Poesia</item>
+        <item>Paranormal</item>
+        <item>Romanç</item>
+        <item>Young adult</item>
+    </string-array>
 </resources>

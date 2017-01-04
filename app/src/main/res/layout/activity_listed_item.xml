@@ -1,61 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:stretchColumns="1">
-    <TableRow android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/titol_row"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:padding="3dip"
-            android:textSize="18sp"
-            android:text="@string/titol" />
-    </TableRow>
-
-    <TableRow
+    android:orientation="vertical"
+    tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item" >
+    <TextView
+        android:id="@+id/titol_row"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/autor_row"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:padding="3dip"
-            android:text="@string/autor" />
-    </TableRow>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:text="@string/titol"
+        android:textStyle="bold"/>
 
-    <TableRow
+    <TextView
+        android:id="@+id/autor_row"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="@string/autor"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        >
         <TextView
             android:id="@+id/cat_row"
-            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:padding="3dip"
-            android:text="@string/categoria" />
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/num_row"
+            android:text="@string/categoria"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            tools:text="Category" />
         <TextView
             android:id="@+id/num_row"
-            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:gravity="left"
-            android:padding="3dip"
-            android:text="@string/num" />
+            android:layout_toStartOf="@+id/star_row"
+            android:text="@string/num"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"/>
         <ImageView
             android:id="@+id/star_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:gravity="left"
-            android:padding="3dip"
-            android:paddingBottom="5dip"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
             android:src="@drawable/ic_star" />
-    </TableRow>
-</TableLayout>
+    </RelativeLayout>
+
+</LinearLayout>

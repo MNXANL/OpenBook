@@ -3,16 +3,17 @@ package com.example.pr_idi.mydatabaseexample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 /*Mostra un elem del recycler view resultat d'haver fet clic (sense permisos de modificació)*/
 public class Activity_Item extends AppCompatActivity {
+    private TextView t, autor, publisher, year, category;
+    private RatingBar stars;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        TextView t, autor, publisher, year, category;
-        RatingBar val;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_item);
         t = (TextView) findViewById(R.id.titol);
@@ -20,8 +21,13 @@ public class Activity_Item extends AppCompatActivity {
         publisher = (TextView) findViewById(R.id.pub);
         year = (TextView) findViewById(R.id.year);
         category = (TextView) findViewById(R.id.cat);
-        val = (RatingBar) findViewById(R.id.ratingBar);
-        //val.setEnabled(false); //not editable
+        stars = (RatingBar) findViewById(R.id.ratingBar);
+        //stars.setEnabled(false); //not editable
+
+        toolbar = (Toolbar) findViewById(R.id.tbar);
+        toolbar.setTitle("My Book DB | Book view");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
@@ -30,8 +36,28 @@ public class Activity_Item extends AppCompatActivity {
             publisher.setText(extras.getString("mpublisher"));
             year.setText(extras.getString("myear"));
             category.setText(extras.getString("mcategory"));
-            val.setRating(extras.getFloat("mval"));
+            String val = extras.getString("mval");
+            /*switch (val){
+                case "molt bo":
+                    stars.setRating(5.0f);
+                    break;
+                case "bo":
+                    stars.setRating(4.0f);
+                    break;
+                case "regular":
+                    stars.setRating(3.0f);
+                    break;
+                case "dolent":
+                    stars.setRating(2.0f);
+                    break;
+                case "molt dolent":
+                    stars.setRating(1.0f);
+                    break;
+                default:
+                    stars.setRating(0.0f);
+                    break;
+            }*/
+            stars.setRating(4.0f);
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
     }
 }

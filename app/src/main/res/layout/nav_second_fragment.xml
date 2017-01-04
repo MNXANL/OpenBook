@@ -5,18 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.pr_idi.mydatabaseexample.FirstFragment">
+    android:background="@color/background_material_light"
+    tools:context="com.example.pr_idi.mydatabaseexample.AboutFragment">
 
     <TextView
-        android:text="si esk no ai nada k entender carajaula k eres pallo i eres alto pos payopino t ago un dibujo o t bendo droga jajajjaa"
+        android:text="Ceci n'est pas une fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" />
-
-    <ProgressBar
-        style="@android:style/Widget.Material.Light.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar" />
+        android:id="@+id/textView2"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:textAlignment="center" />
 
 </FrameLayout>

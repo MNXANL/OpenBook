@@ -70,7 +70,7 @@
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
         </activity>
         <!-- fragment
-            android:name=".FirstFragment"
+            android:name=".AboutFragment"
             android:label="@string/title_activity_first_fragment"
             android:theme="@style/AppTheme"></fragment-->
     </application>

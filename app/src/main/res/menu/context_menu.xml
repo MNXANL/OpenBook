@@ -2,21 +2,39 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@drawable/ic_action_name"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/edit"
         android:title="@string/edit"
         android:icon="@drawable/edit"
-        android:showAsAction="never"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/delete"
         android:title="@string/delete"
         android:icon="@drawable/delete"
-        android:showAsAction="never"/>
-    <item
-        android:id="@+id/action_search"
-        android:title="@string/search"
-        android:icon="@drawable/ic_action_name"
-
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
+        app:showAsAction="always"/>
+    <group>
+        <item
+            android:id="@+id/otitol"
+            android:title="@string/titol"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/oautor"
+            android:title="@string/autor"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/oyear"
+            android:title="@string/any"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/ocat"
+            android:title="@string/categoria"
+            app:showAsAction="never" />
+    </group>
 
 </menu>
