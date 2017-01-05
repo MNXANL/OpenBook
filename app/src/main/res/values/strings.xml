@@ -18,6 +18,10 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_first_fragment">FirstFragment</string>
     <string name="num">5</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="options">Opcions</string>
+    <string name="search">Search</string>
     <string-array name="categories">
         <item>Aventura</item>
         <item>Autoajuda</item>

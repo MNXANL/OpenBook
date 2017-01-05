@@ -23,8 +23,16 @@ public class BookData {
     private MySQLiteHelper dbHelper;
 
     // Here we only select Title and Author, must select the appropriate columns
-    private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
-            MySQLiteHelper.COLUMN_TITLE, MySQLiteHelper.COLUMN_AUTHOR, };
+    private String[] allColumns = {
+            MySQLiteHelper.COLUMN_ID,
+            MySQLiteHelper.COLUMN_TITLE,
+            MySQLiteHelper.COLUMN_AUTHOR,
+            MySQLiteHelper.COLUMN_PUBLISHER,
+            MySQLiteHelper.COLUMN_YEAR,
+            MySQLiteHelper.COLUMN_CATEGORY,
+            MySQLiteHelper.COLUMN_PERSONAL_EVALUATION
+    };
+
 
     public BookData(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -37,6 +45,7 @@ public class BookData {
     public void close() {
         dbHelper.close();
     }
+
 
     public Book createBook(String title, String author,String publisher, String year,
                            String category, String val) {
@@ -127,6 +136,7 @@ public class BookData {
         cursor.close();
         return books;
     }
+
     public List<Book> getAllBooksbyAutor() {
         List<Book> books = new ArrayList<>();
         Cursor cursor = database.rawQuery(
@@ -142,6 +152,7 @@ public class BookData {
         cursor.close();
         return books;
     }
+
     public List<Book> getAllBooksbyCategoria() {
         List<Book> books = new ArrayList<>();
         Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
@@ -171,7 +182,7 @@ public class BookData {
         return books;
     }
 
-    public void UpdateBook (int id, String titol, String autor, String year, String pub, String cat,
+    public void UpdateBook (long id, String titol, String autor, String year, String pub, String cat,
                             String val){
         ContentValues cv = new ContentValues();
         cv.put(MySQLiteHelper.COLUMN_ID, id);
@@ -181,8 +192,9 @@ public class BookData {
         cv.put(MySQLiteHelper.COLUMN_YEAR, year);
         cv.put(MySQLiteHelper.COLUMN_CATEGORY, cat);
         cv.put(MySQLiteHelper.COLUMN_PERSONAL_EVALUATION, val);
-        database.update(MySQLiteHelper.TABLE_BOOKS, cv, MySQLiteHelper.COLUMN_ID + "=?",
-                new String[]{Integer.toString(id)});
+        String[] args = new String[] {titol, autor};
+        database.update(MySQLiteHelper.TABLE_BOOKS, cv, MySQLiteHelper.COLUMN_TITLE + " = ? and " +
+                MySQLiteHelper.COLUMN_AUTHOR + " =? ", args);
     }
 
     public Book getItem(int id){
@@ -202,10 +214,8 @@ public class BookData {
         book.setId(cursor.getLong(0));
         book.setTitle(cursor.getString(1));
         book.setAuthor(cursor.getString(2));
-        book.setPublisher(cursor.getString(3));
-        String year = cursor.getString(4);
-        int year2 = Integer.parseInt(year);
-        book.setYear(year2);
+        book.setYear( cursor.getInt(3) );
+        book.setPublisher(cursor.getString(4));
         book.setCategory(cursor.getString(5));
         book.setPersonal_evaluation(cursor.getString(6));
         return book;
@@ -223,7 +233,9 @@ public class BookData {
                 /*"' AND " + MySQLiteHelper.COLUMN_YEAR + " = '" + any +
                 "' AND " + MySQLiteHelper.COLUMN_PUBLISHER + " = '" + editorial +
                 "' AND " + MySQLiteHelper.COLUMN_CATEGORY + " = '" + categoria + "' ;";*/
+
         Cursor cursor = database.rawQuery(Query, null);
+
         if(cursor.getCount() <= 0){
             cursor.close();
             return false;

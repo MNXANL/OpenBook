@@ -18,23 +18,6 @@
         android:title="@string/delete"
         android:icon="@drawable/delete"
         app:showAsAction="always"/>
-    <group>
-        <item
-            android:id="@+id/otitol"
-            android:title="@string/titol"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/oautor"
-            android:title="@string/autor"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/oyear"
-            android:title="@string/any"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/ocat"
-            android:title="@string/categoria"
-            app:showAsAction="never" />
-    </group>
+
 
 </menu>

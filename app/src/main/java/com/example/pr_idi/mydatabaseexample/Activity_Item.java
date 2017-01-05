@@ -34,10 +34,14 @@ public class Activity_Item extends AppCompatActivity {
             t.setText(extras.getString("mtitol"));
             autor.setText(extras.getString("mautor"));
             publisher.setText(extras.getString("mpublisher"));
-            year.setText(extras.getString("myear"));
+
+            int ye = extras.getInt("myear");
+            year.setText(String.valueOf(ye));
+
             category.setText(extras.getString("mcategory"));
             String val = extras.getString("mval");
-            /*switch (val){
+
+            switch (val){
                 case "molt bo":
                     stars.setRating(5.0f);
                     break;
@@ -56,8 +60,7 @@ public class Activity_Item extends AppCompatActivity {
                 default:
                     stars.setRating(0.0f);
                     break;
-            }*/
-            stars.setRating(4.0f);
+            }
         }
     }
 }

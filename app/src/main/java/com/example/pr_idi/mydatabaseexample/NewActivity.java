@@ -23,14 +23,60 @@ public class NewActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private String categoria;
 
+    private String titolantic;
+    private String autorantic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_new_item);
+        titol = (EditText) findViewById(R.id.ntitol);
+        autor = (EditText) findViewById(R.id.nautor);
+        publisher = (EditText) findViewById(R.id.npub);
+        any = (EditText) findViewById(R.id.nyear);
+        star = (RatingBar) findViewById(R.id.ratingBar);
+        toolbar = (Toolbar) findViewById(R.id.tbar);
+        setSupportActionBar(toolbar);
+        setTitle("New Activity");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            titolantic = extras.getString("mtitol");
+            autorantic = extras.getString("mautor");
+            titol.setText(extras.getString("mtitol"));
+            autor.setText(extras.getString("mautor"));
+            titol.setText(extras.getString("mtitol"));
+            autor.setText(extras.getString("mautor"));
+            publisher.setText(extras.getString("mpublisher"));
+
+            int ye = extras.getInt("myear");
+            any.setText(String.valueOf(ye));
+
+            spinner.setSelection(adapter.getPosition(extras.getString("mcategory")));
+            String val = extras.getString("mval");
+
+            switch (val){
+                case "molt bo":
+                    star.setRating(5.0f);                    break;
+                case "bo":
+                    star.setRating(4.0f);                    break;
+                case "regular":
+                    star.setRating(3.0f);                    break;
+                case "dolent":
+                    star.setRating(2.0f);                    break;
+                case "molt dolent":
+                    star.setRating(1.0f);                    break;
+                default:
+                    star.setRating(0.0f);                    break;
+            }
+        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
@@ -42,15 +88,8 @@ public class NewActivity extends AppCompatActivity {
 
             }
         });
-        titol = (EditText) findViewById(R.id.ntitol);
-        autor = (EditText) findViewById(R.id.nautor);
-        publisher = (EditText) findViewById(R.id.npub);
-        any = (EditText) findViewById(R.id.nyear);
-        star = (RatingBar) findViewById(R.id.ratingBar);
-        toolbar = (Toolbar) findViewById(R.id.tbar);
-        setSupportActionBar(toolbar);
-        setTitle("New Activity");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
+
+
     }
 
     public void onClick(View view) {
@@ -59,7 +98,8 @@ public class NewActivity extends AppCompatActivity {
                 Book b = new Book();
                 b.setTitle(titol.getText().toString());
                 b.setAuthor(autor.getText().toString());
-                String year = null;
+
+                b.setYear(Integer.parseInt(any.getText().toString()));
 
                 b.setPublisher(publisher.getText().toString());
                 b.setCategory(categoria);
@@ -88,15 +128,25 @@ public class NewActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"No hi poden haver camps buits" , Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Intent i = new Intent(NewActivity.this, MainActivity.class);   //afegirem el llibre en el main
+                    Intent i = getIntent();
+                    i.putExtra("titolantic", titolantic);
+                    i.putExtra("autorantic",autorantic);
                     i.putExtra("titol", b.getTitle());
                     i.putExtra("autor", b.getAuthor());
-                    i.putExtra("any", b.getYear());
+
+                    int any = b.getYear();
+                    String any2 = String.valueOf(any);
+                    i.putExtra("any", any2);
+
+                    //i.putExtra("any", b.getYear());
                     i.putExtra("categoria", b.getCategory());
                     i.putExtra("editorial", b.getPublisher());
                     i.putExtra("valoracio", b.getPersonal_evaluation());
+                    setResult(RESULT_OK,i);
+                    finish();
+
                     Toast.makeText(getApplicationContext(), "Libro in", Toast.LENGTH_SHORT).show();
-                    startActivity(i);
+                    //startActivity(i);
                 }
         }
     }
