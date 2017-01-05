@@ -288,19 +288,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         else if (requestCode == 2 && resultCode == RESULT_OK) {
             String titolantic = data.getStringExtra("titolantic");
             String autorantic = data.getStringExtra("autorantic");
-            bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), any, nou.getPublisher(),nou.getCategory(),nou.getPersonal_evaluation());
 
-
+            Book kill = new Book();
+            for(Book i: values){
+                if(i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
+                    kill = i;
+                    values.remove(kill);
+                    values.add(nou);
+                    //adapter.update(titolantic, autorantic, nou);
+                    Toast.makeText(getBaseContext(), "S'ha modificat "+ nou.getTitle(), Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
             int k = 0;
             boolean found = false;
             while(k < values.size() && !found){
                 Book i = values.get(k);
                 if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
                     values.remove(i);
-                    values.add(nou);
-                    found = true;
-                    Toast.makeText(getBaseContext(), "S'ha modificat "+ nou.getTitle(), Toast.LENGTH_SHORT).show();
+                    values.add(nou);bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), any, nou.getPublisher(),nou.getCategory(),nou.getPersonal_evaluation());
 
+                    found = true;
                 }
                 ++k;
             }

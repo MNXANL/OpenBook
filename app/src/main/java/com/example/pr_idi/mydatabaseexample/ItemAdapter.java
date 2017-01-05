@@ -47,6 +47,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 dades.remove(i);
                 dades.add(nou);
                 found = true;
+                //dades.add(k,nou);
             }
             ++k;
         }
