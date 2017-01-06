@@ -21,6 +21,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private Context ctx;
     private int longPosition;
 
+    private List<Long> IndexList;
+
     public ItemAdapter(List<Book> values, Context ctx){
         this.ctx = ctx;
         for(Book i:values){
@@ -68,7 +70,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.setLongClickListener(new LongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                Toast.makeText(ctx, dades.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(ctx, "Book is: "+ dades.get(position).getTitle(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -134,11 +136,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             }
         }
 
-
-
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
+
+            // Pillamos la posición en la
+            // que originalmente se encuentra el libro B
+            //Book b = dades.get(IndexList.indexOf(b));
 
             //Esta linea da problemas:
             Book b = dades.get(position);
@@ -172,6 +176,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             contextMenu.add(0,1,0,"Eliminar");
         }
     }
+
+
 
     public void setOnScrollListener(RecyclerView mrec, Action scrollAction){
         new OnScrollUpDownListener(mrec, 8, scrollAction);
