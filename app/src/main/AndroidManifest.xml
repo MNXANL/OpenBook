@@ -47,6 +47,16 @@
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
         </activity>
         <activity
+            android:name=".HelpActivity"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
+        </activity>
+        <activity
             android:name=".llista_categoria"
             android:parentActivityName=".NewActivity">
             <intent-filter>
@@ -69,10 +79,74 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
         </activity>
-        <!-- fragment
-            android:name=".AboutFragment"
+        <activity
+            android:name=".AboutActivity"
             android:label="@string/title_activity_first_fragment"
-            android:theme="@style/AppTheme"></fragment-->
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
+
+        </activity>
+        <activity
+            android:name=".Create"
+            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+        </activity>
+        <activity
+            android:name=".Edit"
+            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+        </activity>
+        <activity
+            android:name=".Delete"
+            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+        </activity>
+        <activity
+            android:name=".Search"
+            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+        </activity>
+        <activity
+            android:name=".Sort"
+            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+        </activity>
     </application>
 
 </manifest>

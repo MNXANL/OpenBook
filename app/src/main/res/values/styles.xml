@@ -10,6 +10,12 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="CustomPopup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">#141414</item>
+        <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
     <!--style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -25,35 +25,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public ItemAdapter(List<Book> values, Context ctx){
         this.ctx = ctx;
-        for(Book i:values){
+        for(Book i: values){
             dades.add(i);
         }
-    }
-    public void add(Book b){
-        dades.add(b);
-        notifyDataSetChanged();
-    }
-
-
-    public void remove(Book b){
-        dades.remove(b);
-        notifyDataSetChanged();
-    }
-
-    public void update(String titolantic, String autorantic, Book nou){
-        int k = 0;
-        boolean found = false;
-        while(k < dades.size() && !found){
-            Book i = dades.get(k);
-            if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
-                dades.remove(i);
-                dades.add(nou);
-                found = true;
-                //dades.add(k,nou);
-            }
-            ++k;
-        }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -139,12 +113,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-
-            // Pillamos la posición en la
-            // que originalmente se encuentra el libro B
-            //Book b = dades.get(IndexList.indexOf(b));
-
-            //Esta linea da problemas:
             Book b = dades.get(position);
 
             Toast.makeText(ctx, "BOOK = " + b.getTitle() + " / POS = "+ String.valueOf(position) ,Toast.LENGTH_SHORT).show();

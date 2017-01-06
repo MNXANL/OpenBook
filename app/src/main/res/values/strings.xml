@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Myapp</string>
+    <string name="app_name">OpenBook</string>
     <string name="titol">Títol</string>
     <string name="autor">Autor</string>
     <string name="editorial">Editorial</string>
@@ -40,4 +40,30 @@
         <item>Romanç</item>
         <item>Young adult</item>
     </string-array>
+    <string name="about">About OpenBook.</string>
+    <string name="a1">OpenBook is an app developed by Marta Barroso and Miguel Moreno for IDI (Autumn semester, 2016/17)</string>
+    <string name="a2">This app has been licensed with the GNU General Public License version 3.</string>
+    <string name="a3">You may copy, distribute and modify the software as long as you track changes/dates in source files.
+        Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build and install instructions.</string>
+    <string name="create">Create a book</string>
+    <string name="c1">1. Press the button with plus sign which is in the lower right corner of the main screen.</string>
+    <string name="c2">2. Fill in each of the attributes of the new book.</string>
+    <string name="c3">3. In the end, press the save button.</string>
+    <string name="edit2">Edit</string>
+    <string name="e1">1. Make a long click on the item to modify.</string>
+    <string name="e2">2. Press "Edit".</string>
+    <string name="e3">3. Modify the attributes and click the save button.</string>
+    <string name="delete2">Delete</string>
+    <string name="d1">1. Make a long click on the item to delete.</string>
+    <string name="d2">A message will confirm that the book has been deleted.</string>
+    <string name="search2">Search</string>
+    <string name="s1">1. Press the down arrow button to choose a search configuration.</string>
+    <string name="s2">2. There are two kind of search: by tittle or by author.</string>
+    <string name="s3">3. Press the magnifying glass button to search a book.</string>
+    <string name="s4">4. Select the book.</string>
+    <string name="sort">Sort the list by an attribute</string>
+    <string name="so1">1. Press the options button situated in the upper right corner.</string>
+    <string name="so2">2. Select the desired order.</string>
+
+
 </resources>

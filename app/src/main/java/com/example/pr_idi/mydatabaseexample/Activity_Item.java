@@ -25,7 +25,7 @@ public class Activity_Item extends AppCompatActivity {
         //stars.setEnabled(false); //not editable
 
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("My Book DB | Book view");
+        toolbar.setTitle("OpenBook | View book");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

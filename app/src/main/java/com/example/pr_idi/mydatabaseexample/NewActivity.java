@@ -10,21 +10,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class NewActivity extends AppCompatActivity {
     private EditText titol = null;
     private EditText autor = null;
     private EditText publisher = null;
     private EditText any = null;
+    private String categoria;
+
     private Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     private RatingBar star = null;
     private Toolbar toolbar;
-    private String categoria;
 
     private String titolantic;
     private String autorantic;
+    private String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,31 +34,31 @@ public class NewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_item);
         titol = (EditText) findViewById(R.id.ntitol);
         autor = (EditText) findViewById(R.id.nautor);
-        publisher = (EditText) findViewById(R.id.npub);
         any = (EditText) findViewById(R.id.nyear);
+        publisher = (EditText) findViewById(R.id.npub);
         star = (RatingBar) findViewById(R.id.ratingBar);
-        toolbar = (Toolbar) findViewById(R.id.tbar);
-        setSupportActionBar(toolbar);
-        setTitle("New Activity");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
         spinner = (Spinner) findViewById(R.id.spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        toolbar = (Toolbar) findViewById(R.id.tbar);
+        toolbar.setTitle("Create or edit book");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
+
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             titolantic = extras.getString("mtitol");
             autorantic = extras.getString("mautor");
+
             titol.setText(extras.getString("mtitol"));
             autor.setText(extras.getString("mautor"));
-            titol.setText(extras.getString("mtitol"));
-            autor.setText(extras.getString("mautor"));
-            publisher.setText(extras.getString("mpublisher"));
 
             int ye = extras.getInt("myear");
             any.setText(String.valueOf(ye));
+
+            publisher.setText(extras.getString("mpublisher"));
 
             spinner.setSelection(adapter.getPosition(extras.getString("mcategory")));
             String val = extras.getString("mval");
@@ -80,7 +81,7 @@ public class NewActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                Toast.makeText(getBaseContext(),parent.getItemAtPosition(position) + " selected", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(),parent.getItemAtPosition(position) + " selected", Toast.LENGTH_LONG).show();
                 categoria = parent.getItemAtPosition(position).toString();
             }
             @Override
@@ -125,12 +126,13 @@ public class NewActivity extends AppCompatActivity {
 
                 //By this point everything should have been created... or not.
                 if(titol.getText() == null || autor.getText() == null || publisher.getText() == null || any.getText() == null || star.getRating() == 0.0f){
-                    Toast.makeText(getBaseContext(),"No hi poden haver camps buits" , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(),"No hi poden haver camps buits" , Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent i = getIntent();
                     i.putExtra("titolantic", titolantic);
                     i.putExtra("autorantic",autorantic);
+
                     i.putExtra("titol", b.getTitle());
                     i.putExtra("autor", b.getAuthor());
 
@@ -138,14 +140,13 @@ public class NewActivity extends AppCompatActivity {
                     String any2 = String.valueOf(any);
                     i.putExtra("any", any2);
 
-                    //i.putExtra("any", b.getYear());
                     i.putExtra("categoria", b.getCategory());
                     i.putExtra("editorial", b.getPublisher());
                     i.putExtra("valoracio", b.getPersonal_evaluation());
                     setResult(RESULT_OK,i);
                     finish();
 
-                    Toast.makeText(getApplicationContext(), "Libro in", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Libro in", Toast.LENGTH_SHORT).show();
                     //startActivity(i);
                 }
         }

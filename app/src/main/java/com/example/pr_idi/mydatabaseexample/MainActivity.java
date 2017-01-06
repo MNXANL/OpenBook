@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,6 +19,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,12 +28,9 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import static android.support.v4.view.ViewCompat.animate;
 
@@ -43,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ItemAdapter adapter;
     private FloatingActionButton floatingActionButton;
     private static final int DURATION = 150;
-    private static final int REQUEST = 1;
     private List<Book> values;
 
     private NavigationView nvDrawer;
@@ -67,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         toolbar = (Toolbar) findViewById(R.id.tbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        setTitle("My Book DB");
+        toolbar.setTitle("OpenBook");
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         drawerToggle = setupDrawerToggle();
@@ -80,10 +76,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //creo un nou llibre
                 Intent intent = new Intent(MainActivity.this, NewActivity.class);
                 startActivityForResult(intent, 1);
-                //startActivity(intent);
             }
         });
 
@@ -174,6 +168,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             });
         }
+        adapter = new ItemAdapter(values, this);
+        mrecView.setAdapter(adapter);
     }
 
     public boolean onContextItemSelected(MenuItem item){
@@ -186,14 +182,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             i.putExtra("mpublisher", b.getPublisher());
             i.putExtra("mcategory", b.getCategory());
             i.putExtra("mval", b.getPersonal_evaluation());
-            adapter.add(b);
-            startActivityForResult(i,2);
+
+            startActivityForResult(i, 2);
         }
         else {
             String t = b.getTitle();
             bookData.deleteBook(b);
-            //values.remove(b); Brujería
-            adapter.remove(b);
+            values.remove(b);
+
             Toast.makeText(getBaseContext(), "S'ha eliminat "+ t, Toast.LENGTH_SHORT).show();
         }
         sorting();
@@ -204,60 +200,60 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         super.onActivityResult(requestCode, resultCode, data);
-        Bundle extras = data.getExtras();
-        Book nou = new Book();
-        nou.setTitle(extras.getString("titol"));
-        nou.setAuthor(extras.getString("autor"));
+        if (resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras(); //exception if empty
+            Book nou = new Book();
 
-        String any = extras.getString("any");
-        int any_enter = Integer.parseInt(any);
-        nou.setYear(any_enter);
+            nou.setTitle(extras.getString("titol"));
+            nou.setAuthor(extras.getString("autor"));
+            nou.setYear(Integer.parseInt(extras.getString("any")));
+            nou.setPublisher(extras.getString("editorial"));
+            nou.setCategory(extras.getString("categoria"));
+            nou.setPersonal_evaluation(extras.getString("valoracio"));
 
-        nou.setPublisher(extras.getString("editorial"));
-        nou.setCategory(extras.getString("categoria"));
-        nou.setPersonal_evaluation(extras.getString("valoracio"));
-        bookData.open();
+            bookData.open();
 
-        if (requestCode == REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
                 if (!bookData.ExistsBook(nou)) {
                     bookData.createBook(nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
                             nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation());
-                    //values.add(nou); Brujería
-                    adapter.add(nou);
+                    values.add(nou);
+                    sorting();
                     Toast.makeText(getBaseContext(), "S'ha afegit el llibre " + nou.getTitle(), Toast.LENGTH_LONG).show();
                 }
-                else{
+                else {
                     Toast.makeText(getBaseContext(), "El llibre " + nou.getTitle() +" ja existeix", Toast.LENGTH_LONG).show();
                 }
             }
-        }
-        else if (requestCode == 2 && resultCode == RESULT_OK) {
-            String titolantic = data.getStringExtra("titolantic");
-            String autorantic = data.getStringExtra("autorantic");
-            bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()), nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation());
-            adapter.update(titolantic, autorantic, nou);
-            nou.setTitle(data.getStringExtra("titol"));
-            Toast.makeText(getBaseContext(), "S'ha modificat " + nou.getTitle(), Toast.LENGTH_LONG).show();
+            else if (requestCode == 2) {
 
+                String titolantic = extras.getString("titolantic");
+                String autorantic = extras.getString("autorantic");
 
-            /** Esto es brujería
-             *
-            Book kill = new Book();
-            for(Book i: values){
-                if(i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
-                    kill = i;
-                    values.remove(kill);
-                    values.add(nou);
-                    //adapter.update(titolantic, autorantic, nou);
-                    Toast.makeText(getBaseContext(), "S'ha modificat "+ nou.getTitle(), Toast.LENGTH_SHORT).show();
-                    break;
+                int k = 0;
+                boolean found = false;
+                while(k < values.size() && !found){
+                    Book i = values.get(k);
+                    if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
+                        values.remove(i);
+                        values.add(nou);
+                        found = true;
+                    }
+                    ++k;
                 }
-            }*/
-        }
-        else{
-            Toast.makeText(getBaseContext(), "ERROR al afegir el llibre", Toast.LENGTH_LONG).show();
+
+                bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
+                        nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
+
+                sorting();
+                nou.setTitle(extras.getString("titol"));
+                Toast.makeText(getBaseContext(), "S'ha modificat " + nou.getTitle(), Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getBaseContext(), "ERROR al afegir el llibre", Toast.LENGTH_LONG).show();
+            }
+            bookData.close();
+
         }
     }
 
@@ -296,32 +292,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String query) {
-        /** Para esta función se me ha ocurrido que el ItemAdapter adapter tenga un array interno en que
-         * v[i] = index_original;
-         */
         query = query.toLowerCase();
         ArrayList<Book> newList = new ArrayList<>();
-        ArrayList<long> index = new ArrayList<>();
-
         for (Book b: values){
             if(CERCATITOL == 0) {
                 String author = b.getAuthor().toLowerCase();
                 if (author.contains(query)) {
                     newList.add(b);
-                    index.add(newList.indexOf(b));
                 }
             }
-            else if (CERCATITOL == 1){
+            else{
                 String title = b.getTitle().toLowerCase();
                 if (title.contains(query)) {
                     newList.add(b);
-                    index.add(newList.indexOf(b));
                 }
             }
         }
-        adapter.setFilter(newList, index);
+        adapter.setFilter(newList);
         if(newList.isEmpty()){
-            //setBackgroundColor(White); PSEUDOCODE
+
         }
         //mirar si la llista es buida ficar imatge de fons
         return true;
@@ -340,18 +329,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     //clic sobre elements del context menu
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        //Book book = (Book) adapter.getOnItemClickListener();
-
-        // placeholder values
-        Book book = new Book();
-        book.setTitle("The Haiku structure");
-        book.setAuthor("Stops one from writing long words");
-        book.setPublisher("As they do not fit");
-        book.setYear(2048);
-        book.setCategory("Poesia");
-        book.setPersonal_evaluation("molt dolent");
-
-
         switch (item.getItemId()) {
             case R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
@@ -386,17 +363,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 sorting();
                 adapter.notifyDataSetChanged();
                 return true;
-            case R.id.cercaAutor:
-                item.setChecked(true);
-                CERCATITOL = 0;
-                Toast t7 = Toast.makeText(getApplicationContext(),"cercar per autor",Toast.LENGTH_SHORT);
-                t7.show();
-                return true;
             case R.id.cercaTitol:
                 item.setChecked(true);
                 CERCATITOL = 1;
                 Toast t6 = Toast.makeText(getApplicationContext(),"cercar per titol",Toast.LENGTH_SHORT);
                 t6.show();
+                return true;
+            case R.id.cercaAutor:
+                item.setChecked(true);
+                CERCATITOL = 0;
+                Toast t7 = Toast.makeText(getApplicationContext(),"cercar per autor",Toast.LENGTH_SHORT);
+                t7.show();
                 return true;
             default:
                 return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -405,13 +382,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-            new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(MenuItem menuItem) {
-                    selectDrawerItem(menuItem);
-                    return true;
-                }
-            });
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
@@ -422,19 +399,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         switch(menuItem.getItemId()) {
             case R.id.docs:
-               // fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
-                Intent iq = new Intent(MainActivity.this, NewActivity.class); startActivity(iq);
+                // fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
+                Intent i1 = new Intent(MainActivity.this, MainActivity.class); startActivity(i1);
                 break;
             case R.id.recent:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
-                Intent i = new Intent(MainActivity.this, llista_categoria.class); startActivity(i);
+                Intent i2 = new Intent(MainActivity.this, llista_categoria.class); startActivity(i2);
                 break;
             case R.id.about:
-                //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
-                fragmentManager.beginTransaction().replace(R.id.main_content, new AboutFragment()).commit();
+                //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
+                Intent i3 = new Intent(MainActivity.this, AboutActivity.class); startActivity(i3);
                 break;
             case R.id.help:
-                Intent ii = new Intent(MainActivity.this, HelpActivity.class); startActivity(ii);
+                Intent i4 = new Intent(MainActivity.this, HelpActivity.class); startActivity(i4);
                 break;
         }
         // Insert the fragment by replacing any existing fragment
@@ -466,6 +443,30 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     // Life cycle methods. Check whether it is necessary to reimplement them
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }/*
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            mDrawer.openDrawer(GravityCompat.START);
+            return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            mDrawer.openDrawer(GravityCompat.START);
+            return true;
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_SETTINGS) {
+            mDrawer.openDrawer(GravityCompat.START);
+            return true;
+        }*/
+
+        // let the system handle all other key events
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Override
     protected void onResume() {
         bookData.open();
@@ -477,4 +478,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bookData.close();
         super.onPause();
     }
+
 }
