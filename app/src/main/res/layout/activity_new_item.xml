@@ -1,140 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item">
 
-        <include layout="@layout/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item" >
+                <include layout="@layout/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item" >
 
 
 
-            <EditText
-                android:id="@+id/ntitol"
-                android:paddingTop="?actionBarSize"
-                android:layout_marginTop="00dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:hint="@string/titol"
-                android:inputType="textCapWords"
-                android:imeOptions="actionNext"
-                android:textSize="18sp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
+                    <EditText
+                        android:id="@+id/ntitol"
+                        android:paddingTop="?actionBarSize"
+                        android:layout_marginTop="00dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:hint="@string/titol"
+                        android:inputType="textCapWords"
+                        android:imeOptions="actionNext"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp" />
 
-            <EditText
-                android:id="@+id/nautor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/ntitol"
-                android:hint="@string/autor"
-                android:inputType="textCapWords"
-                android:imeOptions="actionNext"
-                android:textSize="18sp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
+                    <EditText
+                        android:id="@+id/nautor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/ntitol"
+                        android:hint="@string/autor"
+                        android:inputType="textCapWords"
+                        android:imeOptions="actionNext"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
 
-            <EditText
-                android:id="@+id/nyear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/nautor"
-                android:hint="@string/any"
-                android:textSize="18sp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                    <EditText
+                        android:id="@+id/nyear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/nautor"
+                        android:hint="@string/any"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
 
-                android:imeOptions="actionNext"
-                android:inputType="number|numberSigned" />
+                        android:imeOptions="actionNext"
+                        android:inputType="number|numberSigned" />
 
-            <EditText
-                android:id="@+id/npub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/nyear"
-                android:inputType="textCapWords"
-                android:imeOptions="actionDone"
-                android:hint="@string/editorial"
-                android:textSize="18sp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
+                    <EditText
+                        android:id="@+id/npub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/nyear"
+                        android:inputType="textCapWords"
+                        android:imeOptions="actionDone"
+                        android:hint="@string/editorial"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
 
-            <TextView
-                android:id="@+id/ncat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/npub"
-                android:text="@string/seleccio"
-                android:textSize="18sp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="20dp"/>
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/ncat"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                />
-            <TextView
-                android:id="@+id/nval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/spinner"
-                android:text="@string/val"
-                android:textSize="18sp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
+                    <TextView
+                        android:id="@+id/ncat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/npub"
+                        android:text="@string/seleccio"
+                        android:textSize="18sp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginRight="20dp"/>
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/ncat"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="20dp"
+                        />
+                    <TextView
+                        android:id="@+id/nval"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/spinner"
+                        android:text="@string/val"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
 
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/nval"
-                android:numStars="5"
-                android:stepSize="1.0" />
-            <Button
-                android:text="Guardar"
-                android:layout_alignParentLeft="false"
-                android:layout_centerInParent="true"
-                android:layout_below="@+id/ratingBar"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="75dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/ConfirmNewButton"
-                android:onClick="onClick"/>
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/nval"
+                        android:numStars="5"
+                        android:stepSize="1.0" />
+                    <Button
+                        android:text="Guardar"
+                        android:layout_alignParentLeft="false"
+                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/ratingBar"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="75dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/ConfirmNewButton"
+                        android:onClick="onClick"/>
 
-    </RelativeLayout>
-</LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>

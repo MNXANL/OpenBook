@@ -3,6 +3,7 @@ package com.example.pr_idi.mydatabaseexample;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ActionBarDrawerToggle drawerToggle;
     private String ORDRE = "titol";
     private int CERCATITOL = 1;
+    private MenuItem oldSort;
+    private MenuItem oldFind;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mrecView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mrecView.setLayoutManager(new LinearLayoutManager(this));
         floatingActionButton = (FloatingActionButton) findViewById(R.id.plus);
+
+        SharedPreferences sp = MainActivity.this.getSharedPreferences(getString(R.string.PREFFILE), MODE_PRIVATE);
+        CERCATITOL = sp.getInt(getString(R.string.settingSearch), 1);
+        ORDRE = sp.getString(getString(R.string.settingOrder), "titol");
+
 
         //Setting toolbar and drawer
         toolbar = (Toolbar) findViewById(R.id.tbar);
@@ -80,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 startActivityForResult(intent, 1);
             }
         });
+
 
         //definim si l'scroll va cap amunt o cap avall
         Action scrollAction = new Action() {
@@ -122,16 +131,32 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mrecView.setItemAnimator(new DefaultItemAnimator());
 
         //si moc l'scroll defineixo un conjunt d'operacions
-        adapter.setOnScrollListener(mrecView, scrollAction);
         mrecView.addItemDecoration(new DividerItemDecoration(this));
 
         registerForContextMenu(mrecView);
         adapter.notifyDataSetChanged();
     }
 
+    private int EvalToNum(String val) {
+        switch (val){
+            case "molt bo":
+                return 5;
+            case "bo":
+                return 4;
+            case "regular":
+                return 3;
+            case "dolent":
+                return 2;
+            case "molt dolent":
+                return 1;
+            default:
+                return 0;
+        }
+    }
+
     private void sorting () {
         if(ORDRE.equals("titol")){
-            //Toast.makeText(getApplicationContext(), "TITEL", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "TITLE", Toast.LENGTH_SHORT).show();
             Collections.sort(values, new Comparator<Book>(){
                 public int compare(Book b1, Book b2){
                     String t1 = b1.getTitle();
@@ -155,6 +180,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     String t1 = String.valueOf(b1.getYear());
                     String t2 = String.valueOf(b2.getYear());
                     return t1.compareTo(t2);
+                }
+            });
+        }
+        else if(ORDRE.equals("valoracio")){
+            Collections.sort(values, new Comparator<Book>() {
+                public int compare(Book b1, Book b2) {
+                    String t1 = String.valueOf(EvalToNum(b1.getPersonal_evaluation()));
+                    String t2 = String.valueOf(EvalToNum(b2.getPersonal_evaluation()));
+                    return t2.compareTo(t1);
                 }
             });
         }
@@ -230,24 +264,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 String titolantic = extras.getString("titolantic");
                 String autorantic = extras.getString("autorantic");
 
-                int k = 0;
-                boolean found = false;
-                while(k < values.size() && !found){
-                    Book i = values.get(k);
-                    if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
-                        values.remove(i);
-                        values.add(nou);
-                        found = true;
+                if (!bookData.ExistsBook(nou)) {
+                    int k = 0;
+                    boolean found = false;
+                    while(k < values.size() && !found){
+                        Book i = values.get(k);
+                        if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
+                            values.remove(i);
+                            values.add(nou);
+                            found = true;
+                        }
+                        ++k;
                     }
-                    ++k;
+
+                    bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
+                            nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
+                    sorting();
+                    nou.setTitle(extras.getString("titol"));
+                    Toast.makeText(getBaseContext(), "S'ha modificat " + nou.getTitle(), Toast.LENGTH_LONG).show();
                 }
-
-                bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
-                        nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
-
-                sorting();
-                nou.setTitle(extras.getString("titol"));
-                Toast.makeText(getBaseContext(), "S'ha modificat " + nou.getTitle(), Toast.LENGTH_LONG).show();
+                else {
+                    Toast.makeText(getBaseContext(), "No es pot renombrar a un llibre amb el mateix titol i autor!", Toast.LENGTH_LONG).show();
+                }
             }
             else {
                 Toast.makeText(getBaseContext(), "ERROR al afegir el llibre", Toast.LENGTH_LONG).show();
@@ -321,63 +359,112 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         SearchManager sMan = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
         searchView.setOnQueryTextListener(this);
+        Toast.makeText(getApplicationContext(),"SORT BY " + ORDRE + " AND FINDS BY " + CERCATITOL, Toast.LENGTH_SHORT).show();
+        setOldies(menu);
         return true;
+    }
+
+    private void setOldies(Menu menu) {
+        switch(CERCATITOL){
+            case 0:
+                oldFind = menu.findItem(R.id.cercaAutor);
+            case 1:
+                oldFind = menu.findItem(R.id.cercaTitol);
+        }
+        switch(ORDRE){
+            case "titol":
+                oldSort = menu.findItem(R.id.otitol);
+            case "autor":
+                oldSort = menu.findItem(R.id.oautor);
+            case "any":
+                oldSort = menu.findItem(R.id.oyear);
+            case "categoria":
+                oldSort = menu.findItem(R.id.ocat);
+            case "valoracio":
+                oldSort = menu.findItem(R.id.oval);
+        }
     }
 
     //clic sobre elements del context menu
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
+
+        //if (item.isChecked())   item.setChecked(false);else   item.setChecked(true);
+
+        int i = item.getItemId();
+        if (oldSort != null  && i != R.id.home && i != R.id.cercaAutor && i != R.id.cercaTitol) {
+            Toast.makeText(getApplicationContext(),   "Sort: "+oldSort.getTitle()+" item: "+item.getTitle(), Toast.LENGTH_SHORT).show();
+            item.setCheckable(true).setChecked(true);
+            oldSort.setChecked(false);
+            oldSort = item;
+        }
+        else {
+            oldSort = item;
+        }
+        if (oldFind != null && i != R.id.home && i != R.id.otitol && i != R.id.oautor && i != R.id.oyear && i != R.id.ocat && i != R.id.oval) {
+            Toast.makeText(getApplicationContext(), " Find: "+oldFind.getTitle()+" item: "+item.getTitle(), Toast.LENGTH_SHORT).show();
+            item.setCheckable(true).setChecked(true);
+            oldFind.setChecked(false);
+            oldFind = item;
+        }
+        else {
+            oldFind = item;
+        }
+
+        switch (i) {
             case R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
-
-            //New cases
             case R.id.otitol:
                 Toast t2 = Toast.makeText(getApplicationContext(),"ordenar per titol",Toast.LENGTH_SHORT);
                 t2.show();
                 ORDRE = "titol";
-                sorting();
+                sorting(); saveSettings();
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.oautor:
                 Toast t3 = Toast.makeText(getApplicationContext(),"ordenar per autor",Toast.LENGTH_SHORT);
                 t3.show();
                 ORDRE = "autor";
-                sorting();
+                sorting(); saveSettings();
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.oyear:
                 Toast t4 = Toast.makeText(getApplicationContext(),"ordenar per any",Toast.LENGTH_SHORT);
                 t4.show();
+                //item.setChecked(true);
                 ORDRE = "any";
-                sorting();
+                sorting(); saveSettings();
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.ocat:
                 Toast t5 = Toast.makeText(getApplicationContext(),"ordenar per categoria",Toast.LENGTH_SHORT);
                 t5.show();
                 ORDRE = "categoria";
-                sorting();
+                sorting(); saveSettings();
+                adapter.notifyDataSetChanged();
+                return true;
+            case R.id.oval:
+                Toast t6 = Toast.makeText(getApplicationContext(),"ordenar per valoracio",Toast.LENGTH_SHORT);
+                t6.show();
+                ORDRE = "valoracio";
+                sorting(); saveSettings();
                 adapter.notifyDataSetChanged();
                 return true;
             case R.id.cercaTitol:
-                item.setChecked(true);
-                CERCATITOL = 1;
-                Toast t6 = Toast.makeText(getApplicationContext(),"cercar per titol",Toast.LENGTH_SHORT);
-                t6.show();
+                CERCATITOL = 1; saveSettings();
+                Toast.makeText(getApplicationContext(),"cercar per titol",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.cercaAutor:
-                item.setChecked(true);
-                CERCATITOL = 0;
-                Toast t7 = Toast.makeText(getApplicationContext(),"cercar per autor",Toast.LENGTH_SHORT);
-                t7.show();
+                CERCATITOL = 0; saveSettings();
+                Toast.makeText(getApplicationContext(),"cercar per autor",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
         }
+       // switch_order(ORDRE, item);
+       // switch_find(CERCATITOL, item);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -401,10 +488,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             case R.id.docs:
                 // fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
                 Intent i1 = new Intent(MainActivity.this, MainActivity.class); startActivity(i1);
+                menuItem.setChecked(true);
                 break;
             case R.id.recent:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
-                Intent i2 = new Intent(MainActivity.this, llista_categoria.class); startActivity(i2);
+                Intent i2 = new Intent(MainActivity.this, NewActivity.class); startActivity(i2);
+                menuItem.setChecked(true);
                 break;
             case R.id.about:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
@@ -418,7 +507,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // Highlight the selected item has been done by NavigationView
         // Set action bar title
         // Close the navigation drawer
-        menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
     }
@@ -465,6 +553,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // let the system handle all other key events
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void saveSettings () {
+        SharedPreferences sp = MainActivity.this.getSharedPreferences(getString(R.string.PREFFILE), MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putInt(getString(R.string.settingSearch), CERCATITOL);
+        edit.putString(getString(R.string.settingOrder), ORDRE);
+        edit.commit();
     }
 
     @Override

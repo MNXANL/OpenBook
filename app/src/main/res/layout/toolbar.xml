@@ -8,9 +8,10 @@
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/OverFlow"
+    app:popupTheme="@style/Theme.AppCompat.Light"
     android:background="?attr/colorPrimaryDark"
     android:elevation="10dp"
+
     app:title="MyBookDB" >
 </android.support.v7.widget.Toolbar>
 

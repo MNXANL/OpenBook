@@ -38,13 +38,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(ItemViewHolder holder, final int position) {
         final Book b = dades.get(position);
         holder.bindEntry(b); //emplenem dades
         holder.setLongClickListener(new LongClickListener() {
             @Override
             public void onItemLongClick(int position) {
                 Toast.makeText(ctx, "Book is: "+ dades.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Book b = dades.get(position);
+
+                Toast.makeText(ctx, "Into BOOK [" + b.getTitle() + "] in POS : "+ String.valueOf(position) ,Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(ctx, Activity_Item.class);
+                i.putExtra("mtitol", b.getTitle());
+                i.putExtra("mautor", b.getAuthor());
+                i.putExtra("myear", b.getYear());
+                i.putExtra("mpublisher",b.getPublisher());
+                i.putExtra("mcategory", b.getCategory());
+                i.putExtra("mval",b.getPersonal_evaluation());
+                ctx.startActivity(i);
             }
         });
     }
@@ -110,22 +126,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             }
         }
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            Book b = dades.get(position);
+        @Override  public void onClick(View view) {   }
 
-            Toast.makeText(ctx, "BOOK = " + b.getTitle() + " / POS = "+ String.valueOf(position) ,Toast.LENGTH_SHORT).show();
-
-            Intent i = new Intent(this.ctx, Activity_Item.class);
-            i.putExtra("mtitol", b.getTitle());
-            i.putExtra("mautor", b.getAuthor());
-            i.putExtra("myear", b.getYear());
-            i.putExtra("mpublisher",b.getPublisher());
-            i.putExtra("mcategory", b.getCategory());
-            i.putExtra("mval",b.getPersonal_evaluation());
-            this.ctx.startActivity(i);
-        }
         public void setLongClickListener(LongClickListener longClickListener){
             this.longClickListener = longClickListener;
         }
@@ -143,14 +145,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             contextMenu.add(0,0,0,"Editar");
             contextMenu.add(0,1,0,"Eliminar");
         }
+
     }
 
 
 
-    public void setOnScrollListener(RecyclerView mrec, Action scrollAction){
-        new OnScrollUpDownListener(mrec, 8, scrollAction);
-    }
-    public void setFilter(ArrayList<Book>newList){
+   public void setFilter(ArrayList<Book>newList){
         dades = new ArrayList<>();
         dades.addAll(newList);
         notifyDataSetChanged();

@@ -1,46 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_search"
-        android:title="@string/search"
-        android:icon="@drawable/ic_action_name"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
 
-    <item
-        android:id="@+id/cercaOpts"
-        android:title="@string/options"
-        android:icon="@drawable/ic_options2"
-        app:showAsAction="always|collapseActionView">
-        <menu>
-            <item android:id="@+id/cercaAutor"
-                android:title="@string/author" />
-            <item android:id="@+id/cercaTitol"
-                android:title="@string/title" />
-        </menu>
-    </item>
+    <group android:id="@+id/groupFind"
+        >
+        <item
+            android:id="@+id/action_search"
+            android:title="@string/search"
+            android:icon="@drawable/ic_action_name"
+            app:actionViewClass="android.support.v7.widget.SearchView"
+            app:showAsAction="always|collapseActionView" />
+        <item
+            android:id="@+id/cercaOpts"
+            android:title="@string/options"
+            android:icon="@drawable/ic_options2"
+            app:showAsAction="always|collapseActionView">
+            <menu>
+                <item android:id="@+id/cercaAutor"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/author" />
+                <item android:id="@+id/cercaTitol"
+                    android:checkable="true"
+                    android:checked="false"
+                    android:title="@string/title" />
+            </menu>
+        </item>
+    </group>
 
-    <!--item
-        android:id="@+id/action_options"
-        android:title="Options"
-        android:icon="@drawable/ic_options"
-        app:showAsAction="ifRoom"></item-->
-    <item
-        android:id="@+id/otitol"
-        android:title="@string/titol"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/oautor"
-        android:title="@string/autor"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/oyear"
-        android:title="@string/any"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/ocat"
-        android:title="@string/categoria"
-        app:showAsAction="never" />
+    <group android:id="@+id/groupSort">
+        <item
+            android:id="@+id/otitol"
+            android:title="@string/titol"
+            android:checkable="true"
+            android:checked="false"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/oautor"
+            android:title="@string/autor"
+            android:checkable="true"
+            android:checked="false"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/oyear"
+            android:title="@string/any"
+            android:checkable="true"
+            android:checked="false"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/ocat"
+            android:title="@string/categoria"
+            android:checkable="true"
+            android:checked="false"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/oval"
+            android:title="@string/val"
+            android:checkable="true"
+            android:checked="false"
+            app:showAsAction="never" />
+    </group>
 
 </menu>
