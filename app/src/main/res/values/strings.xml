@@ -45,6 +45,7 @@
     <string name="a2">This app has been licensed with the GNU General Public License version 3.</string>
     <string name="a3">You may copy, distribute and modify the software as long as you track changes/dates in source files.
         Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build and install instructions.</string>
+    <string name="a4">Icons made by Freepik et. al. from www.flaticon.com </string>
     <string name="create">Create a book</string>
     <string name="c1">1. Press the button with plus sign which is in the lower right corner of the main screen.</string>
     <string name="c2">2. Fill in each of the attributes of the new book.</string>
