@@ -14,15 +14,11 @@
             android:id="@+id/cercaOpts"
             android:title="@string/options"
             android:icon="@drawable/ic_options2"
-            app:showAsAction="always|collapseActionView">
+            app:showAsAction="ifRoom|collapseActionView">
             <menu>
                 <item android:id="@+id/cercaAutor"
-                    android:checkable="true"
-                    android:checked="false"
                     android:title="@string/author" />
                 <item android:id="@+id/cercaTitol"
-                    android:checkable="true"
-                    android:checked="false"
                     android:title="@string/title" />
             </menu>
         </item>

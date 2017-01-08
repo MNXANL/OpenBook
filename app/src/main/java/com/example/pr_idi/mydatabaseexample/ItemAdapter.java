@@ -1,6 +1,5 @@
 package com.example.pr_idi.mydatabaseexample;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -8,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,16 +18,33 @@ import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     private ArrayList<Book> dades = new ArrayList<Book>();
-    private Context ctx;
+    MainActivity ctx;
     private int longPosition;
-
+    private boolean edit = false;
+    private boolean delete = false;
     private List<Long> IndexList;
 
-    public ItemAdapter(List<Book> values, Context ctx){
+    public ItemAdapter(List<Book> values, MainActivity ctx){
         this.ctx = ctx;
         for(Book i: values){
             dades.add(i);
         }
+    }
+
+    public void setEdit(boolean edit){
+        this.edit = edit;
+    }
+
+    public boolean getEdit() {
+        return edit;
+    }
+
+    public void setDelete(boolean del){
+        this.delete = del;
+    }
+
+    public boolean getDelete(){
+        return delete;
     }
 
     @Override
@@ -50,17 +67,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i;
+                int req = 0;
                 Book b = dades.get(position);
+                if (!edit) {
+                    Toast.makeText(ctx, "Into BOOK [" + b.getTitle() + "] in POS : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    i = new Intent(ctx, Activity_Item.class);
+                    req = 1;
+                }
+                else /*if (edit)*/ {
+                    edit = false;
+                    Toast.makeText(ctx, "Editar " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    i = new Intent(ctx, NewActivity.class);
+                    req = 2;
+                }
 
-                Toast.makeText(ctx, "Into BOOK [" + b.getTitle() + "] in POS : "+ String.valueOf(position) ,Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(ctx, Activity_Item.class);
                 i.putExtra("mtitol", b.getTitle());
                 i.putExtra("mautor", b.getAuthor());
                 i.putExtra("myear", b.getYear());
-                i.putExtra("mpublisher",b.getPublisher());
+                i.putExtra("mpublisher", b.getPublisher());
                 i.putExtra("mcategory", b.getCategory());
-                i.putExtra("mval",b.getPersonal_evaluation());
-                ctx.startActivity(i);
+                i.putExtra("mval", b.getPersonal_evaluation());
+                ctx.startActivityForResult(i, req);
             }
         });
     }
@@ -82,10 +110,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         private TextView mcategory;
         private TextView mnum;
         private ImageView mstar;
+        private CheckBox checkBox;
         ArrayList<Book> dades = new ArrayList<>();
-        Context ctx;
+        MainActivity ctx;
         LongClickListener longClickListener;
-        private ItemViewHolder(View itemView, Context ctx, ArrayList<Book> dades){
+        private ItemViewHolder(View itemView, final MainActivity ctx, ArrayList<Book> dades){
             super(itemView);
             this.ctx = ctx;
             this.dades = dades;
@@ -95,6 +124,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             mcategory = (TextView) itemView.findViewById(R.id.cat_row);
             mnum = (TextView) itemView.findViewById(R.id.num_row);
             mstar= (ImageView) itemView.findViewById(R.id.star_row);
+            checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ctx.prepare_Selection(view, getAdapterPosition());
+                }
+            });
             itemView.setOnLongClickListener(this);
             itemView.setOnCreateContextMenuListener(this);
         }
@@ -123,6 +159,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 default:
                     mnum.setText("0");
                     break;
+            }
+            if(!delete) checkBox.setVisibility(View.GONE); //si no som en mode delete els checkbox no son visibles
+            else{
+                checkBox.setVisibility(View.VISIBLE);
+                checkBox.setChecked(false);
             }
         }
 
@@ -153,6 +194,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
    public void setFilter(ArrayList<Book>newList){
         dades = new ArrayList<>();
         dades.addAll(newList);
+        notifyDataSetChanged();
+    }
+    public void updateAdapter(ArrayList<Book> list){
+        for(Book i: list){
+            dades.remove(i);
+        }
         notifyDataSetChanged();
     }
 

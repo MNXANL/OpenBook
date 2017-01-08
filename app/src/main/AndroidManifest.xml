@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -26,10 +25,12 @@
             android:theme="@style/MyTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -52,6 +53,7 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
@@ -69,7 +71,6 @@
         </activity>
         <activity
             android:name=".NewActivity"
-
             android:parentActivityName=".MainActivity">
             <intent-filter>
                 <category android:name="android.intent.category." />
@@ -81,7 +82,6 @@
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_first_fragment"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category." />
@@ -90,62 +90,71 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
-
         </activity>
         <activity
             android:name=".Create"
-            android:label="@string/title_activity_first_fragment"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category." />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
         </activity>
         <activity
             android:name=".Edit"
-            android:label="@string/title_activity_first_fragment"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category." />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
         </activity>
         <activity
             android:name=".Delete"
-            android:label="@string/title_activity_first_fragment"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category." />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
         </activity>
         <activity
             android:name=".Search"
-            android:label="@string/title_activity_first_fragment"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category." />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
         </activity>
         <activity
             android:name=".Sort"
-            android:label="@string/title_activity_first_fragment"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <category android:name="android.intent.category." />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+        </activity>
+        <activity
+            android:name=".Settings"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category." />
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.pr_idi.mydatabaseexample.HelpActivity" />
+                android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
         </activity>
     </application>
 

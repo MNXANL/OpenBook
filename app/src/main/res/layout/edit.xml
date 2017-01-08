@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/toolbar"
         android:layout_width="match_parent"
@@ -23,8 +32,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_vertical|right"
-        android:text="@string/e1"
-        android:textAlignment="textStart" />
+        android:text="@string/e1" />
 
     <TextView
         android:layout_width="match_parent"
@@ -34,8 +42,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_vertical"
-        android:text="@string/e2"
-        android:textAlignment="viewStart" />
+        android:text="@string/e2" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +51,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_vertical|right"
-        android:text="@string/e3"
-        android:textAlignment="viewStart" />
+        android:text="@string/e3" />
 
 </LinearLayout>
+</ScrollView>

@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class NewActivity extends AppCompatActivity {
     private EditText titol = null;
@@ -44,6 +46,9 @@ public class NewActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tbar);
         toolbar.setTitle("Create or edit book");
+
+        TextView count_text = (TextView) findViewById(R.id.counter_text);
+        count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //botó undo
 
@@ -95,6 +100,8 @@ public class NewActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.nobook:
+                Toast.makeText(getApplicationContext(), "TOP", Toast.LENGTH_SHORT).show();
             case R.id.ConfirmNewButton: //si cliquem a categoria ens canviem d'activitat
                 Book b = new Book();
                 b.setTitle(titol.getText().toString());

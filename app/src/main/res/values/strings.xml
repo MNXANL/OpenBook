@@ -3,52 +3,53 @@
     <string name="PREFFILE">OpenBook</string>
     <string name="settingSearch">Search Settings</string>
     <string name="settingOrder">Order Settings</string>
-    <string name="titol">Títol</string>
-    <string name="autor">Autor</string>
-    <string name="editorial">Editorial</string>
-    <string name="any">Any de publicació</string>
-    <string name="categoria">Categoria</string>
-    <string name="seleccio">Selecciona una categoria</string>
-    <string name="val">Valoració</string>
-    <string name="action_settings">Afegeix infor...</string>
-    <string name="dataError">Error al accedir a les dades</string>
+    <string name="DefBooks">Add default books</string>
+
+    <string name="titol">Title</string>
+    <string name="autor">Author</string>
+    <string name="editorial">Publisher</string>
+    <string name="categoria">Category</string>
+    <string name="seleccio">Select a category</string>
+    <string name="val">Rating</string>
+    <string name="action_settings">Add data...</string>
+    <string name="dataError">Error accessing to data</string>
     <!-- Opciones menu contextual-->
-    <string name="edit">Editar</string>
-    <string name="delete">Eliminar</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string name="missatge1">S\'ha eliminat el llibre </string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="title_activity_first_fragment">FirstFragment</string>
     <string name="num">5</string>
     <string name="title">Title</string>
     <string name="author">Author</string>
-    <string name="options">Opcions</string>
+    <string name="options">Options</string>
     <string name="search">Search</string>
     <string-array name="categories">
-        <item>Aventura</item>
-        <item>Autoajuda</item>
-        <item>Ciència ficció</item>
-        <item>Clàssic</item>
-        <item>Fantasia</item>
-        <item>Humor</item>
-        <item>Misteri</item>
-        <item>Novel·la biogràfica</item>
-        <item>Novel·la gràfica</item>
-        <item>Novel·la històrica</item>
-        <item>Novel·la negra</item>
-        <item>Novel·la policíaca i terror</item>
-        <item>Poesia</item>
+        <item>Adventure</item>
+        <item>Self-help</item>
+        <item>Sci-Fi</item>
+        <item>Classic</item>
+        <item>Fantasy</item>
+        <item>Comedy</item>
+        <item>Mystery</item>
+        <item>Biographical novel</item>
+        <item>Graphic novel</item>
+        <item>Historical novel</item>
+        <item>Hard-boiled/Noir novel</item>
+        <item>Horror and detective novel</item>
+        <item>Poetry</item>
         <item>Paranormal</item>
-        <item>Romanç</item>
+        <item>Romance</item>
         <item>Young adult</item>
     </string-array>
-    <string name="about">About OpenBook.</string>
+    <string name="about">About OpenBook</string>
     <string name="a1">OpenBook is an app developed by Marta Barroso and Miguel Moreno for IDI (Autumn semester, 2016/17)</string>
     <string name="a2">This app has been licensed with the GNU General Public License version 3.</string>
     <string name="a3">You may copy, distribute and modify the software as long as you track changes/dates in source files.
         Any modifications to or software including (via compiler) GPL-licensed code must also be made available under the GPL along with build and install instructions.</string>
-    <string name="a4">Icons made by Freepik et. al. from www.flaticon.com </string>
+    <string name="a4">This app uses icons from www.flaticon.com. All rights go to their respective authors.</string>
+
     <string name="create">Create a book</string>
     <string name="c1">1. Press the button with plus sign which is in the lower right corner of the main screen.</string>
     <string name="c2">2. Fill in each of the attributes of the new book.</string>
@@ -68,7 +69,29 @@
     <string name="sort">Sort the list by an attribute</string>
     <string name="so1">1. Press the options button situated in the upper right corner.</string>
     <string name="so2">2. Select the desired order.</string>
-    <string name="Favourites">Recent</string>
 
+    <string name="Favourites">Previously seen</string>
+    <string name="header">OpenBook</string>
+    <string name="new_book">New Book</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="no_books">There are no books. You can add a new one by clicking here.</string>
+
+    <string name="any">Publishing year</string>
+    <string name="aboutFrag">AboutActivity</string>
+
+    <string-array name="searchOptions">
+        <item>Order by Title</item>
+        <item>Order by Author</item>
+    </string-array>
+
+    <string-array name="orderOptions">
+        <item>Title</item>
+        <item>Author</item>
+        <item>Publishing Year</item>
+        <item>Category</item>
+        <item>Rating</item>
+    </string-array>
 
 </resources>

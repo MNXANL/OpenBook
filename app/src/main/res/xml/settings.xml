@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers>
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+        <PreferenceCategory android:title="Search options" >
+            <ListPreference
+                android:key="search"
+                android:entries="@array/searchOptions"
+                android:summary="resum"
+                android:entryValues="@array/searchOptions"
+                android:title="Search Options" />
+            <ListPreference
+                android:key="order"
+                android:entries="@array/orderOptions"
+                android:summary="resum"
+                android:entryValues="@array/orderOptions"
+                android:title="Order Options" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+</preference-headers>
+

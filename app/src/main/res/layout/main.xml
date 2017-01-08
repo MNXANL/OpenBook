@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
+        android:fitsSystemWindows="true"
         tools:context="com.example.pr_idi.mydatabaseexample.MainActivity"
         android:id="@+id/main">
 
@@ -20,11 +21,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-        <FrameLayout
+        <TextView
+            android:id="@+id/nobook"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_books"
+            android:onClick="onClick"
+            android:gravity="center"
+            android:clickable="true"
+            android:textAlignment="center" />
+        <android.support.design.widget.CoordinatorLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/my_recycler_view"
                 android:scrollbars="vertical"
@@ -39,12 +50,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
+                android:visibility="visible"
                 app:layout_behavior="com.example.pr_idi.mydatabaseexample.ScrollAwareFABBehavior"
                 android:layout_marginBottom="20dp"
-                android:layout_marginRight="70dp"
-                app:elevation="4dp"/>
+                android:layout_marginRight="20dp"
+                app:elevation="6dp"/>
 
-        </FrameLayout>
+        </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenBook</string>
+    <string name="about">Sobre OpenBook</string>
+    <string name="any">Any de publicació</string>
+    <string name="autor">Autor</string>
+    <string name="author">Autor</string>
+    <string name="categoria">Categoria</string>
+    <string name="create">Crear un llibre</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
+    <string name="editorial">Editorial</string>
+    <string name="header">OpenBook</string>
+    <string name="help">Ajuda</string>
+    <string name="new_book">Nou llibre</string>
+    <string name="no_books">No hi ha cap llibre.         Pots afegir-ne un de nou clicant aqui.</string>
+    <string name="options">Opcions</string>
+    <string name="search">Cerca</string>
+    <string name="search2">Cerca</string>
+    <string name="settingOrder">Preferències d\'ordenació</string>
+    <string name="title">Titol</string>
+    <string name="seleccio">Selecciona una categoria</string>
+    <string name="edit2">Editar</string>
+    <string name="drawer_close">"Obrir "</string>
+    <string name="delete2">Eliminar</string>
+    <string name="dataError">Error al accedir a les dades</string>
+    <string name="action_settings">Afegeix informació…</string>
+    <string name="Favourites">Recent</string>
+    <string name="DefBooks">Afegir llibres per defecte</string>
+    <string name="settingSearch">Preferències de cerca</string>
+    <string name="title_activity_settings">Preferències</string>
+    <string name="sort">Ordenar la llista per atribut</string>
+    <string name="val">Valoració</string>
+    <string name="titol">Titol</string>
+    <string name="a1">OpenBook és una aplicació desenvolupada per Marta Barroso i Miguel Moreno per l\'assignatura de IDI (Quadrimestre de tardor, 2016/17)</string>
+</resources>

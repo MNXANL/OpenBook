@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity__item"
+    android:id="@+id/activity_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item">
     <include layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity__item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        tools:context="com.example.pr_idi.mydatabaseexample.Activity_Item">
     <TextView
         android:text="@string/titol"
         android:id="@+id/mostra_titol"
@@ -126,4 +140,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
 
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>

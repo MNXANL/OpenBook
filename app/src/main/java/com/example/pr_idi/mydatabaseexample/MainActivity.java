@@ -26,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -40,17 +42,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private RecyclerView mrecView;
     private ItemAdapter adapter;
     private FloatingActionButton floatingActionButton;
-    private static final int DURATION = 150;
     private List<Book> values;
 
     private NavigationView nvDrawer;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
+
     private String ORDRE = "titol";
     private int CERCATITOL = 1;
+    private int DURATION = 150;
+    private boolean defBooks = true;
+
     private MenuItem oldSort;
-    private MenuItem oldFind;
+    private TextView nobook;
+    private TextView count_text;
+    private ArrayList<Book> selection_list;
+    int counter = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         SharedPreferences sp = MainActivity.this.getSharedPreferences(getString(R.string.PREFFILE), MODE_PRIVATE);
         CERCATITOL = sp.getInt(getString(R.string.settingSearch), 1);
         ORDRE = sp.getString(getString(R.string.settingOrder), "titol");
-
+        defBooks = sp.getBoolean(getString(R.string.DefBooks), true);
 
         //Setting toolbar and drawer
         toolbar = (Toolbar) findViewById(R.id.tbar);
@@ -79,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
+        count_text = (TextView) findViewById(R.id.counter_text);
+        count_text.setVisibility(View.GONE);
+        nobook = (TextView) findViewById(R.id.nobook);
+        count_text.setVisibility(View.GONE);
 
         //clic al botó
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +130,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bookData.open();
 
         //agafo llibres ordenats per títol
-        inicialitza();
+
+        if (defBooks) inicialitza();
 
         values = bookData.getAllBooks();
 
@@ -135,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         registerForContextMenu(mrecView);
         adapter.notifyDataSetChanged();
+        if(values.size() > 0) nobook.setVisibility(View.GONE);
+        else displayText();
     }
 
     private int EvalToNum(String val) {
@@ -156,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void sorting () {
         if(ORDRE.equals("titol")){
-            Toast.makeText(getApplicationContext(), "TITLE", Toast.LENGTH_SHORT).show();
             Collections.sort(values, new Comparator<Book>(){
                 public int compare(Book b1, Book b2){
                     String t1 = b1.getTitle();
@@ -223,10 +237,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             String t = b.getTitle();
             bookData.deleteBook(b);
             values.remove(b);
-
             Toast.makeText(getBaseContext(), "S'ha eliminat "+ t, Toast.LENGTH_SHORT).show();
+
         }
         sorting();
+        if(values.size() > 0) nobook.setVisibility(View.GONE);
+        else displayText();
         return super.onContextItemSelected(item);
     }
 
@@ -293,6 +309,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             bookData.close();
 
         }
+        if(values.size() > 0) nobook.setVisibility(View.GONE);
+        else displayText();
     }
 
 
@@ -320,6 +338,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if (!bookData.ExistsTitle(newBook[i])) {
             bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
         }
+        defBooks = false;
     }
 
 
@@ -366,12 +385,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void setOldies(Menu menu) {
-        switch(CERCATITOL){
+        /*switch(CERCATITOL){
             case 0:
                 oldFind = menu.findItem(R.id.cercaAutor);
             case 1:
                 oldFind = menu.findItem(R.id.cercaTitol);
-        }
+        }*/
         switch(ORDRE){
             case "titol":
                 oldSort = menu.findItem(R.id.otitol);
@@ -394,7 +413,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         int i = item.getItemId();
         if (oldSort != null  && i != R.id.home && i != R.id.cercaAutor && i != R.id.cercaTitol) {
-            Toast.makeText(getApplicationContext(),   "Sort: "+oldSort.getTitle()+" item: "+item.getTitle(), Toast.LENGTH_SHORT).show();
             item.setCheckable(true).setChecked(true);
             oldSort.setChecked(false);
             oldSort = item;
@@ -402,15 +420,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         else {
             oldSort = item;
         }
-        if (oldFind != null && i != R.id.home && i != R.id.otitol && i != R.id.oautor && i != R.id.oyear && i != R.id.ocat && i != R.id.oval) {
-            Toast.makeText(getApplicationContext(), " Find: "+oldFind.getTitle()+" item: "+item.getTitle(), Toast.LENGTH_SHORT).show();
+        /*if (oldFind != null && i != R.id.home && i != R.id.otitol && i != R.id.oautor && i != R.id.oyear && i != R.id.ocat && i != R.id.oval) {
             item.setCheckable(true).setChecked(true);
             oldFind.setChecked(false);
             oldFind = item;
         }
         else {
             oldFind = item;
-        }
+        }*/
 
         switch (i) {
             case R.id.home:
@@ -460,6 +477,21 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 CERCATITOL = 0; saveSettings();
                 Toast.makeText(getApplicationContext(),"cercar per autor",Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.delete_mode:
+
+                Toast.makeText(getApplicationContext(),"mode delete",Toast.LENGTH_SHORT).show();
+                 toolbar.setTitle("OpenBook");
+
+                if (selection_list != null) {
+                    adapter.updateAdapter(selection_list);
+                    clearDeleteMode("NO");
+                }
+                else {
+                    clearDeleteMode("YES");
+                }
+                toolbar.setTitle("OpenBook");
+
+                return true;
             default:
                 return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
         }
@@ -479,28 +511,45 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
+        // com.example.pr_idi.mydatabaseexample.Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         switch(menuItem.getItemId()) {
-            case R.id.docs:
-                // fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
-                Intent i1 = new Intent(MainActivity.this, MainActivity.class); startActivity(i1);
-                menuItem.setChecked(true);
+            case R.id.nav_create:
+                Intent i1 = new Intent(MainActivity.this, NewActivity.class);
+                startActivityForResult(i1, 1);
                 break;
-            case R.id.recent:
-                //fragmentManager.beginTransaction().replace(R.id.main_content, new SecondFragment()).commit();
-                Intent i2 = new Intent(MainActivity.this, NewActivity.class); startActivity(i2);
-                menuItem.setChecked(true);
+            case R.id.nav_edit:
+                adapter.setEdit(true);
+                adapter.notifyDataSetChanged();
+                //Intent i2 = new Intent(MainActivity.this, MainActivity.class);
+                //startActivity(i2);
                 break;
+            case R.id.nav_delete:
+                toolbar.getMenu().clear();
+                toolbar.setTitle("Delete");
+                toolbar.inflateMenu(R.menu.menu_delete);
+                count_text.setVisibility(View.VISIBLE);
+
+                selection_list = new ArrayList<>();
+                counter = 0;
+
+                adapter.setDelete(true);
+                adapter.notifyDataSetChanged();
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                //Intent i3 = new Intent(MainActivity.this, MainActivity.class);
+                //startActivity(i3);
+                break;
+            case R.id.nav_settings:
+                Intent i3 = new Intent(MainActivity.this, Settings.class); startActivity(i3);
             case R.id.about:
                 //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
-                Intent i3 = new Intent(MainActivity.this, AboutActivity.class); startActivity(i3);
+                Intent i4 = new Intent(MainActivity.this, AboutActivity.class); startActivity(i4);
                 break;
             case R.id.help:
-                Intent i4 = new Intent(MainActivity.this, HelpActivity.class); startActivity(i4);
+                Intent i5 = new Intent(MainActivity.this, HelpActivity.class); startActivity(i5);
                 break;
         }
         // Insert the fragment by replacing any existing fragment
@@ -535,32 +584,69 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }/*
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-            mDrawer.openDrawer(GravityCompat.START);
+            finish();
             return true;
         }
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            mDrawer.openDrawer(GravityCompat.START);
-            return true;
-        }
-
-        if (keyCode == KeyEvent.KEYCODE_SETTINGS) {
-            mDrawer.openDrawer(GravityCompat.START);
-            return true;
-        }*/
-
         // let the system handle all other key events
         return super.onKeyDown(keyCode, event);
     }
 
     public void saveSettings () {
         SharedPreferences sp = MainActivity.this.getSharedPreferences(getString(R.string.PREFFILE), MODE_PRIVATE);
-        SharedPreferences.Editor edit = sp.edit();
-        edit.putInt(getString(R.string.settingSearch), CERCATITOL);
-        edit.putString(getString(R.string.settingOrder), ORDRE);
-        edit.commit();
+        SharedPreferences.Editor editPref = sp.edit();
+        editPref.putInt(getString(R.string.settingSearch), CERCATITOL);
+        editPref.putString(getString(R.string.settingOrder), ORDRE);
+        editPref.putBoolean(getString(R.string.DefBooks), defBooks);
+        editPref.apply();
+    }
+
+    public void prepare_Selection(View vista, int position){
+        if ( ((CheckBox) vista).isChecked() ) {
+            selection_list.add(values.get(position));
+            ++counter;
+            updateCounter(counter);
+        }
+        else{
+            selection_list.remove(values.get(position));
+            --counter;
+            updateCounter(counter);
+        }
+    }
+    public void updateCounter(int counter){
+        if(counter == 0) count_text.setText("| No items selected");
+        else if (counter == 1) count_text.setText("| 1 item selected");
+        else count_text.setText("| " + counter + " items selected");
+    }
+
+    public void displayText(){
+        nobook.setVisibility(View.VISIBLE);
+        nobook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NewActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+    }
+    public void clearDeleteMode(String list_null){
+        adapter.setDelete(false);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_search);
+        count_text.setVisibility(View.GONE);
+        count_text.setText("| No items selected");
+        counter = 0;
+        //eliminar de la db
+        if (list_null.equals("NO")) {
+            for (Book i : selection_list) {
+                bookData.deleteBook(i);
+                values.remove(i);
+            }
+            selection_list.clear();
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (values.size() > 0) nobook.setVisibility(View.GONE);
+        else displayText();
     }
 
     @Override
@@ -573,6 +659,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onPause() {
         bookData.close();
         super.onPause();
+    }
+    @Override
+    public void onBackPressed(){
+        if (adapter.getEdit()) {
+            adapter.setEdit(false);
+            adapter.notifyDataSetChanged();
+        }
+
+        else if (adapter.getDelete()){
+            if (selection_list != null) clearDeleteMode("NO");
+            else clearDeleteMode("YES");
+            adapter.notifyDataSetChanged();
+        }
+
+        else {
+            super.onBackPressed();
+        }
     }
 
 }

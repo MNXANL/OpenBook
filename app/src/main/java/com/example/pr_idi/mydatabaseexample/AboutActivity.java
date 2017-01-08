@@ -3,19 +3,22 @@ package com.example.pr_idi.mydatabaseexample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
-    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
 
-        toolbar = (Toolbar) findViewById(R.id.tbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("OpenBook | About this app");
+        TextView count_text = (TextView) findViewById(R.id.counter_text);
+        count_text.setVisibility(View.GONE);
     }
     @Override
     protected void onResume() {
