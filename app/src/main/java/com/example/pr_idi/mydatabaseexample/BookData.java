@@ -143,7 +143,7 @@ public class BookData {
         book.setId(cursor.getLong(0));
         book.setTitle(cursor.getString(1));
         book.setAuthor(cursor.getString(2));
-        book.setYear( cursor.getInt(3) );
+        book.setYear(cursor.getInt(3));
         book.setPublisher(cursor.getString(4));
         book.setCategory(cursor.getString(5));
         book.setPersonal_evaluation(cursor.getString(6));

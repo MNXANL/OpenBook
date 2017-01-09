@@ -84,6 +84,10 @@
     <string name="any">Year</string>
     <string name="aboutFrag">AboutActivity</string>
     <string name="NoEmptyField">No empty fields are allowed.</string>
+    <string name="searchsettings">Search Configuration</string>
+    <string name="searchexplain">Searches can be filtered to fetch either titles or authors. Choose a search parameter:</string>
+    <string name="sortsettings">Sort Configuration</string>
+    <string name="sortexplain">The list of books can be sorted according to title, author, year, category or rating. Choose a sorting parameter:</string>
 
     <string-array name="searchOptions">
         <item>Find by Title</item>

@@ -256,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             CERCATITOL = Integer.parseInt( extras.getString("setTitle") );
             ORDRE = extras.getString("setOrder");
             defBooks = Boolean.parseBoolean( extras.getString("setBook") );
+            sorting();
             saveSettings();
         }
         else if (resultCode == RESULT_OK) {
@@ -277,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                             nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation());
                     values.add(nou);
                     sorting();
-                    Toast.makeText(getBaseContext(), "S'ha afegit el llibre " + nou.getTitle(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "S'ha afegit el llibre " + nou.getTitle()+ " de id "+ nou.getId(), Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(getBaseContext(), "El llibre " + nou.getTitle() +" ja existeix", Toast.LENGTH_LONG).show();
@@ -307,6 +308,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 else {
                     Toast.makeText(getBaseContext(), "No es pot renombrar a un llibre amb el mateix titol i autor!", Toast.LENGTH_LONG).show();
                 }
+            }
+            else if(requestCode == 3){
+                ORDRE = extras.getString("setOrder");
+                String cerca = extras.getString("setTitle");
+                CERCATITOL = Integer.valueOf(cerca);
             }
             else {
                 Toast.makeText(getBaseContext(), "ERROR al afegir el llibre", Toast.LENGTH_LONG).show();
@@ -359,13 +365,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         for (Book b: values){
             if(CERCATITOL == 0) {
                 String author = b.getAuthor().toLowerCase();
-                if (author.contains(query)) {
+                int pos = author.indexOf(query);
+                if (author.contains(query) && pos == 0) {
                     newList.add(b);
                 }
             }
             else{
                 String title = b.getTitle().toLowerCase();
-                if (title.contains(query)) {
+                int pos = title.indexOf(query);
+                if (title.contains(query) && pos == 0) {
                     newList.add(b);
                 }
             }
@@ -377,6 +385,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //mirar si la llista es buida ficar imatge de fons
         return true;
     }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_search, menu);
@@ -477,9 +487,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Toast.makeText(getApplicationContext(),"cercar per autor",Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.delete_mode:
-
                 Toast.makeText(getApplicationContext(),"mode delete",Toast.LENGTH_SHORT).show();
-                toolbar.setTitle("OpenBook");
 
                 if (selection_list != null) {
                     adapter.updateAdapter(selection_list);
@@ -494,8 +502,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             default:
                 return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
         }
-        // switch_order(ORDRE, item);
-        // switch_find(CERCATITOL, item);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -544,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 break;
             case R.id.nav_settings:
-                Intent i3 = new Intent(MainActivity.this, Settings.class);
+                Intent i3 = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivityForResult(i3, 3);
                 break;
             case R.id.about:
@@ -595,7 +601,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         editPref.putInt(getString(R.string.settingSearch), CERCATITOL);
         editPref.putString(getString(R.string.settingOrder), ORDRE);
         editPref.putBoolean(getString(R.string.DefBooks), defBooks);
-        editPref.apply();
+        editPref.commit();
     }
 
     public void prepare_Selection(View vista, int position){
@@ -645,6 +651,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         if (values.size() > 0) nobook.setVisibility(View.GONE);
         else displayText();
+
+        sorting();
     }
 
     @Override
@@ -662,12 +670,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void onBackPressed(){
         if (adapter.getEdit()) {
             adapter.setEdit(false);
+            sorting();
             adapter.notifyDataSetChanged();
         }
 
         else if (adapter.getDelete()){
             if (selection_list != null) clearDeleteMode("NO");
             else clearDeleteMode("YES");
+            sorting();
             adapter.notifyDataSetChanged();
         }
 
