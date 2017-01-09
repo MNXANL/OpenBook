@@ -27,5 +27,3 @@
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>
 
-
-    <!-- app:theme="@style/CustomPopup"-->

@@ -106,9 +106,9 @@ public class NewActivity extends AppCompatActivity {
                 Book b = new Book();
                 b.setTitle(titol.getText().toString());
                 b.setAuthor(autor.getText().toString());
-
-                b.setYear(Integer.parseInt(any.getText().toString()));
-
+                if (!any.getText().toString().isEmpty()) {
+                    b.setYear(Integer.parseInt(any.getText().toString()));
+                }
                 b.setPublisher(publisher.getText().toString());
                 b.setCategory(categoria);
                 float num = star.getRating();
@@ -133,7 +133,7 @@ public class NewActivity extends AppCompatActivity {
 
                 //By this point everything should have been created... or not.
                 if(titol.getText() == null || autor.getText() == null || publisher.getText() == null || any.getText() == null || star.getRating() == 0.0f){
-                    //Toast.makeText(getBaseContext(),"No hi poden haver camps buits" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.NoEmptyField , Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent i = getIntent();

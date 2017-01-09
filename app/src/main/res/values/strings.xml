@@ -24,6 +24,7 @@
     <string name="title">Title</string>
     <string name="author">Author</string>
     <string name="options">Options</string>
+    <string name="Sort">Sort books by</string>
     <string name="search">Search</string>
     <string-array name="categories">
         <item>Adventure</item>
@@ -66,6 +67,8 @@
     <string name="s2">2. There are two kind of search: by tittle or by author.</string>
     <string name="s3">3. Press the magnifying glass button to search a book.</string>
     <string name="s4">4. Select the book.</string>
+
+    <string name="sortOpt">Sort</string>
     <string name="sort">Sort the list by an attribute</string>
     <string name="so1">1. Press the options button situated in the upper right corner.</string>
     <string name="so2">2. Select the desired order.</string>
@@ -78,20 +81,21 @@
     <string name="help">Help</string>
     <string name="no_books">There are no books. You can add a new one by clicking here.</string>
 
-    <string name="any">Publishing year</string>
+    <string name="any">Year</string>
     <string name="aboutFrag">AboutActivity</string>
+    <string name="NoEmptyField">No empty fields are allowed.</string>
 
     <string-array name="searchOptions">
-        <item>Order by Title</item>
-        <item>Order by Author</item>
+        <item>Find by Title</item>
+        <item>Find by Author</item>
     </string-array>
 
     <string-array name="orderOptions">
-        <item>Title</item>
-        <item>Author</item>
-        <item>Publishing Year</item>
-        <item>Category</item>
-        <item>Rating</item>
+        <item>Order by Title</item>
+        <item>Order by Author</item>
+        <item>Order by Publishing Year</item>
+        <item>Order by Category</item>
+        <item>Order by Rating</item>
     </string-array>
 
 </resources>

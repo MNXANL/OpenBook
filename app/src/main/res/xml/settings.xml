@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="Search options" >
+<preferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <include layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <PreferenceCategory>
         <ListPreference
             android:key="search"
             android:entries="@array/searchOptions"
-            android:summary="resum"
+            android:summary="Set the criteria for the search view"
             android:entryValues="@array/searchOptions"
             android:title="Search Options" />
         <ListPreference
             android:key="order"
             android:entries="@array/orderOptions"
-            android:summary="resum"
+            android:summary="Set the order on the main screen"
             android:entryValues="@array/orderOptions"
             android:title="Order Options" />
-    </PreferenceCategory>
-</PreferenceScreen>
 
+    </PreferenceCategory>
+</preferenceScreen>

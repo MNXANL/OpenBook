@@ -11,10 +11,11 @@ public class Delete extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TextView count_text = (TextView) findViewById(R.id.counter_text);
-        count_text.setVisibility(View.GONE);setContentView(R.layout.delete);
+        setContentView(R.layout.delete);
         toolbar = (Toolbar) findViewById(R.id.tbar);
         toolbar.setTitle("Help");
+        TextView count_text = (TextView) findViewById(R.id.counter_text);
+        count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
+
     private void sorting () {
         if(ORDRE.equals("titol")){
             Collections.sort(values, new Comparator<Book>(){
@@ -191,9 +192,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         else if(ORDRE.equals("any")){
             Collections.sort(values, new Comparator<Book>() {
                 public int compare(Book b1, Book b2) {
-                    String t1 = String.valueOf(b1.getYear());
-                    String t2 = String.valueOf(b2.getYear());
-                    return t1.compareTo(t2);
+                    int t1 = b1.getYear();
+                    int t2 = b2.getYear();
+                    return (t1 - t2);
                 }
             });
         }
@@ -211,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 public int compare(Book b1, Book b2){
                     String t1 = b1.getCategory();
                     String t2 = b2.getCategory();
-
                     return t1.compareTo(t2);
                 }
             });
@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter = new ItemAdapter(values, this);
         mrecView.setAdapter(adapter);
     }
+
 
     public boolean onContextItemSelected(MenuItem item){
         Book b = adapter.getItemSelected(item); //llibre sel·leccionat per editar o eliminar
@@ -250,7 +251,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (requestCode == 3 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            CERCATITOL = Integer.parseInt( extras.getString("setTitle") );
+            ORDRE = extras.getString("setOrder");
+            defBooks = Boolean.parseBoolean( extras.getString("setBook") );
+            saveSettings();
+        }
+        else if (resultCode == RESULT_OK) {
             Bundle extras = data.getExtras(); //exception if empty
             Book nou = new Book();
 
@@ -276,10 +284,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
             else if (requestCode == 2) {
-
                 String titolantic = extras.getString("titolantic");
                 String autorantic = extras.getString("autorantic");
-
                 if (!bookData.ExistsBook(nou)) {
                     int k = 0;
                     boolean found = false;
@@ -292,7 +298,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                         }
                         ++k;
                     }
-
                     bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
                             nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
                     sorting();
@@ -385,23 +390,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void setOldies(Menu menu) {
-        /*switch(CERCATITOL){
-            case 0:
-                oldFind = menu.findItem(R.id.cercaAutor);
-            case 1:
-                oldFind = menu.findItem(R.id.cercaTitol);
-        }*/
         switch(ORDRE){
             case "titol":
                 oldSort = menu.findItem(R.id.otitol);
+                menu.findItem(R.id.otitol).setChecked(true);
+                break;
             case "autor":
                 oldSort = menu.findItem(R.id.oautor);
+                menu.findItem(R.id.oautor).setChecked(true);
+                break;
             case "any":
                 oldSort = menu.findItem(R.id.oyear);
+                menu.findItem(R.id.oyear).setChecked(true);
+                break;
             case "categoria":
                 oldSort = menu.findItem(R.id.ocat);
+                menu.findItem(R.id.ocat).setChecked(true);
+                break;
             case "valoracio":
                 oldSort = menu.findItem(R.id.oval);
+                menu.findItem(R.id.oval).setChecked(true);
+                break;
         }
     }
 
@@ -409,25 +418,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onOptionsItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        //if (item.isChecked())   item.setChecked(false);else   item.setChecked(true);
-
         int i = item.getItemId();
-        if (oldSort != null  && i != R.id.home && i != R.id.cercaAutor && i != R.id.cercaTitol) {
+        if (oldSort != null  && (i == R.id.otitol || i == R.id.oautor
+                || i == R.id.oyear || i == R.id.ocat || i == R.id.oval)) {
             item.setCheckable(true).setChecked(true);
             oldSort.setChecked(false);
             oldSort = item;
         }
-        else {
+        else if (i == R.id.otitol || i == R.id.oautor|| i == R.id.oyear || i == R.id.ocat || i == R.id.oval) {
             oldSort = item;
         }
-        /*if (oldFind != null && i != R.id.home && i != R.id.otitol && i != R.id.oautor && i != R.id.oyear && i != R.id.ocat && i != R.id.oval) {
-            item.setCheckable(true).setChecked(true);
-            oldFind.setChecked(false);
-            oldFind = item;
-        }
-        else {
-            oldFind = item;
-        }*/
 
         switch (i) {
             case R.id.home:
@@ -450,7 +450,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             case R.id.oyear:
                 Toast t4 = Toast.makeText(getApplicationContext(),"ordenar per any",Toast.LENGTH_SHORT);
                 t4.show();
-                //item.setChecked(true);
                 ORDRE = "any";
                 sorting(); saveSettings();
                 adapter.notifyDataSetChanged();
@@ -480,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             case R.id.delete_mode:
 
                 Toast.makeText(getApplicationContext(),"mode delete",Toast.LENGTH_SHORT).show();
-                 toolbar.setTitle("OpenBook");
+                toolbar.setTitle("OpenBook");
 
                 if (selection_list != null) {
                     adapter.updateAdapter(selection_list);
@@ -495,8 +494,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             default:
                 return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
         }
-       // switch_order(ORDRE, item);
-       // switch_find(CERCATITOL, item);
+        // switch_order(ORDRE, item);
+        // switch_find(CERCATITOL, item);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -523,12 +522,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 break;
             case R.id.nav_edit:
                 adapter.setEdit(true);
+                adapter.setDelete(false);
+                count_text.setVisibility(View.GONE);
+                toolbar.getMenu().clear();
+                toolbar.setTitle("Select to Edit");
+                toolbar.inflateMenu(R.menu.menu_search);
                 adapter.notifyDataSetChanged();
-                //Intent i2 = new Intent(MainActivity.this, MainActivity.class);
-                //startActivity(i2);
                 break;
             case R.id.nav_delete:
                 toolbar.getMenu().clear();
+                adapter.setEdit(false);
                 toolbar.setTitle("Delete");
                 toolbar.inflateMenu(R.menu.menu_delete);
                 count_text.setVisibility(View.VISIBLE);
@@ -538,24 +541,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                 adapter.setDelete(true);
                 adapter.notifyDataSetChanged();
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                //Intent i3 = new Intent(MainActivity.this, MainActivity.class);
-                //startActivity(i3);
+                //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 break;
             case R.id.nav_settings:
-                Intent i3 = new Intent(MainActivity.this, Settings.class); startActivity(i3);
+                Intent i3 = new Intent(MainActivity.this, Settings.class);
+                startActivityForResult(i3, 3);
+                break;
             case R.id.about:
-                //fragmentManager.beginTransaction().replace(R.id.main_content, new AboutActivity()).commit();
                 Intent i4 = new Intent(MainActivity.this, AboutActivity.class); startActivity(i4);
                 break;
             case R.id.help:
                 Intent i5 = new Intent(MainActivity.this, HelpActivity.class); startActivity(i5);
                 break;
         }
-        // Insert the fragment by replacing any existing fragment
-        // Highlight the selected item has been done by NavigationView
-        // Set action bar title
-        // Close the navigation drawer
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
     }
@@ -675,6 +673,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         else {
             super.onBackPressed();
+        }
+    }
+    @Override
+    public void finish() {
+        if(adapter.getDelete() || adapter.getEdit()){
+            adapter.setEdit(false);
+            adapter.setDelete(false);
+
+            toolbar.setTitle("OpenBook");
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_search);
+            count_text.setVisibility(View.GONE);
+            adapter.notifyDataSetChanged();
+        }else{
+            //Do whatever it is that you want to do
+            super.finish(); //This will finish the activity and take you back
         }
     }
 

@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:id="@+id/groupFind"
-        >
-        <item
-            android:id="@+id/action_search"
-            android:title="@string/search"
-            android:icon="@drawable/ic_action_name"
-            app:actionViewClass="android.support.v7.widget.SearchView"
-            app:showAsAction="always|collapseActionView" />
-        <item
-            android:id="@+id/cercaOpts"
-            android:title="@string/options"
-            android:icon="@drawable/ic_options2"
-            app:showAsAction="ifRoom|collapseActionView">
-            <menu>
-                <item android:id="@+id/cercaAutor"
-                    android:title="@string/author" />
-                <item android:id="@+id/cercaTitol"
-                    android:title="@string/title" />
-            </menu>
-        </item>
-    </group>
+<group android:id="@+id/groupFind">
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/search"
+        android:icon="@drawable/ic_action_name"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/title_menu"
+        android:title="SEARCH FILTER:"
+        android:icon="@drawable/ic_options2"
+        app:showAsAction="ifRoom|withText">
+        <menu>
+            <item android:id="@+id/title_menu_text"
+                android:focusable="false"
+                android:textStyle="bold|italic"
+                android:title="SEARCH FILTER:" />
+            <item android:id="@+id/cercaAutor"
+                android:title="@string/author" />
+            <item android:id="@+id/cercaTitol"
+                android:title="@string/title" />
+        </menu>
+    </item>
+</group>
 
+<item
+    android:id="@+id/title_menu2"
+    android:title="@string/sort"
+    app:showAsAction="ifRoom|withText">
     <group android:id="@+id/groupSort">
+        <item android:id="@+id/title_menu_text2"
+            android:focusable="false"
+            android:textStyle="bold|italic"
+            android:title="SORT BOOKS BY:" />
         <item
             android:id="@+id/otitol"
             android:title="@string/titol"
@@ -56,5 +67,5 @@
             android:checked="false"
             app:showAsAction="never" />
     </group>
-
+</item>
 </menu>
