@@ -16,12 +16,11 @@ import java.util.List;
 
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
-    private ArrayList<Book> dades = new ArrayList<Book>();
+    private ArrayList<Book> dades = new ArrayList<>();
     MainActivity ctx;
     private int longPosition;
     private boolean edit = false;
     private boolean delete = false;
-    private List<Long> IndexList;
 
     public ItemAdapter(List<Book> values, MainActivity ctx){
         this.ctx = ctx;
@@ -99,7 +98,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public Book getItemSelected(MenuItem item){
         Book b = dades.get(longPosition);
-        //Toast.makeText(ctx, "Item seleccionat " + item.getTitle() + " del llibre " + b.getTitle(), Toast.LENGTH_SHORT).show();
         return b;
     }
 
