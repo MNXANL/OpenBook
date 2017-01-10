@@ -47,8 +47,7 @@ public class BookData {
     }
 
 
-    public Book createBook(String title, String author, String year, String publisher,
-                           String category, String val) {
+    public Book createBook(String title, String author, String year, String publisher, String category, String val) {
         ContentValues values = new ContentValues();
         Log.d("Creating", "Creating " + title + " " + author + " " + publisher + " " + year + " "
                 + category + " " + val);
@@ -64,7 +63,7 @@ public class BookData {
 
         // Actual insertion of the data using the values variable
         long insertId = database.insert(MySQLiteHelper.TABLE_BOOKS, null, values);
-
+        Log.d("ID", "ID =" + insertId);
         // Main activity calls this procedure to create a new book
         // and uses the result to update the listview.
         // Therefore, we need to get the data from the database
@@ -81,7 +80,7 @@ public class BookData {
 
         cursor.moveToFirst();
         Book newBook = cursorToBook(cursor);
-
+        newBook.setId(insertId);
         // Do not forget to close the cursor
         cursor.close();
 
@@ -131,10 +130,9 @@ public class BookData {
         cv.put(MySQLiteHelper.COLUMN_YEAR, year);
         cv.put(MySQLiteHelper.COLUMN_CATEGORY, cat);
         cv.put(MySQLiteHelper.COLUMN_PERSONAL_EVALUATION, val);
-        String[] args = new String[] {titold, autold};
+        String[] args = new String[] {String.valueOf(id)};
 
-        database.update(MySQLiteHelper.TABLE_BOOKS, cv, MySQLiteHelper.COLUMN_TITLE + " = ? and " +
-                MySQLiteHelper.COLUMN_AUTHOR + " = ? ", args);
+        database.update(MySQLiteHelper.TABLE_BOOKS, cv, MySQLiteHelper.COLUMN_ID + " = ? ", args);
 
     }
 
@@ -143,7 +141,7 @@ public class BookData {
         book.setId(cursor.getLong(0));
         book.setTitle(cursor.getString(1));
         book.setAuthor(cursor.getString(2));
-        book.setYear(cursor.getInt(3));
+        book.setYear( cursor.getInt(3) );
         book.setPublisher(cursor.getString(4));
         book.setCategory(cursor.getString(5));
         book.setPersonal_evaluation(cursor.getString(6));
@@ -159,9 +157,6 @@ public class BookData {
         String Query = "SELECT * FROM " + MySQLiteHelper.TABLE_BOOKS +
                 " WHERE title = '" + titol +
                 "' AND author = '" + autor +  "' ;";
-                /*"' AND " + MySQLiteHelper.COLUMN_YEAR + " = '" + any +
-                "' AND " + MySQLiteHelper.COLUMN_PUBLISHER + " = '" + editorial +
-                "' AND " + MySQLiteHelper.COLUMN_CATEGORY + " = '" + categoria + "' ;";*/
 
         Cursor cursor = database.rawQuery(Query, null);
         if (cursor.getCount() <= 0){

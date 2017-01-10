@@ -5,6 +5,7 @@
     android:id="@+id/activity_screen_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context="com.example.pr_idi.mydatabaseexample.Splash_screen">
 
     <ImageView

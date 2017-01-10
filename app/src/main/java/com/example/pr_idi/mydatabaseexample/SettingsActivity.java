@@ -20,9 +20,10 @@ public class SettingsActivity extends AppCompatActivity {
     private ArrayAdapter<CharSequence> adapter_search;
     private ArrayAdapter<CharSequence> adapter_sort;
     private Button save;
-    int cercaTitol = 1;
-    String ordre = "titol";
+    int cercaTitol;
+    String ordre;
     //boolean defBooks ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,12 @@ public class SettingsActivity extends AppCompatActivity {
         getPreferences();
         save = (Button) findViewById(R.id.ConfigurationButton);
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("Settings");
+        toolbar.setTitle(R.string.settings);
+
+            Bundle extras = getIntent().getExtras();
+            cercaTitol = extras.getInt("CERCATITOL");
+            ordre = extras.getString("ORDRE");
+
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
@@ -52,22 +58,23 @@ public class SettingsActivity extends AppCompatActivity {
         else spinner_search.setSelection(adapter_search.getPosition("Author"));
 
         switch (ordre){
-            case "Title":
+            case "titol":
                 spinner_sort.setSelection(adapter_sort.getPosition("Title"));
                 break;
-            case "Author":
+            case "autor":
                 spinner_sort.setSelection(adapter_sort.getPosition("Author"));
                 break;
-            case "Publishing year":
-                spinner_sort.setSelection(adapter_sort.getPosition("Publishing year"));
+            case "any" :
+                spinner_sort.setSelection(adapter_sort.getPosition("Publishing Year"));
                 break;
-            case "Category":
+            case "categoria":
                 spinner_sort.setSelection(adapter_sort.getPosition("Category"));
                 break;
-            case "Rating":
+            case "valoracio":
                 spinner_sort.setSelection(adapter_sort.getPosition("Rating"));
                 break;
         }
+
 
         //listener spinner search
         spinner_search.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -89,7 +96,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
                 //Toast.makeText(getBaseContext(),parent.getItemAtPosition(position) + " selected", Toast.LENGTH_LONG).show();
-                ordre = parent.getItemAtPosition(position).toString();
+                ordre = parent.getItemAtPosition(position).toString().toLowerCase();
+                translateOrder();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -97,9 +105,22 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void translateOrder() {
+        switch (ordre){
+            case "title": ordre="titol"; break;
+            case "author": ordre="autor"; break;
+            case "publishing year": ordre="any"; break;
+            case "category": ordre="categoria"; break;
+            case "rating": ordre="valoracio"; break;
+            case "Title": ordre="titol"; break;
+        }
+    }
+
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ConfigurationButton: //si cliquem a categoria ens canviem d'activitat
+
                 savePreferences();
                 Intent i = getIntent();
                 String cercaTitle = String.valueOf(cercaTitol);
@@ -125,6 +146,6 @@ public class SettingsActivity extends AppCompatActivity {
         editPref.putInt(getString(R.string.settingSearch), cercaTitol);
         editPref.putString(getString(R.string.settingOrder), ordre);
         //editPref.putBoolean(getString(R.string.DefBooks), defBooks);
-        editPref.commit();
+        editPref.apply();
     }
 }

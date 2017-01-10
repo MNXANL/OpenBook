@@ -13,7 +13,7 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("Help");
+        toolbar.setTitle(R.string.help);
         setSupportActionBar(toolbar);
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);

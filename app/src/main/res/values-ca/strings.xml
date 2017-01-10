@@ -33,5 +33,4 @@
     <string name="val">Valoració</string>
     <string name="titol">Titol</string>
     <string name="a1">OpenBook és una aplicació desenvolupada per Marta Barroso i Miguel Moreno per l\'assignatura de IDI (Quadrimestre de tardor, 2016/17)</string>
-    <string name="NoEmptyField">No hi poden haver camps buits.</string>
 </resources>

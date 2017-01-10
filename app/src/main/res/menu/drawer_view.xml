@@ -19,7 +19,7 @@
 
     </group>
 
-    <item android:title="Options">
+    <item android:title="@string/options">
         <menu>
             <group>
                 <item

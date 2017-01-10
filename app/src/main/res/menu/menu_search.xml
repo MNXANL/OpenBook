@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <group android:id="@+id/groupFind">
@@ -11,14 +12,16 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:showAsAction="always|collapseActionView" />
     <item
         android:id="@+id/title_menu"
-        android:title="SEARCH FILTER:"
+        android:title="@string/search"
         android:icon="@drawable/ic_options2"
-        app:showAsAction="ifRoom|withText">
+        app:showAsAction="ifRoom">
         <menu>
             <item android:id="@+id/title_menu_text"
                 android:focusable="false"
                 android:textStyle="bold|italic"
-                android:title="SEARCH FILTER:" />
+                android:enabled="false"
+                android:title="@string/searchFilter"
+                tools:textStyle="bold|italic" />
             <item android:id="@+id/cercaAutor"
                 android:title="@string/author" />
             <item android:id="@+id/cercaTitol"
@@ -35,7 +38,8 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         <item android:id="@+id/title_menu_text2"
             android:focusable="false"
             android:textStyle="bold|italic"
-            android:title="SORT BOOKS BY:" />
+            android:enabled="false"
+            android:title="@string/sortFilter" />
         <item
             android:id="@+id/otitol"
             android:title="@string/titol"

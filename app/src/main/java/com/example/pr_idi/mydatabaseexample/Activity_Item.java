@@ -26,7 +26,7 @@ public class Activity_Item extends AppCompatActivity {
         //stars.setEnabled(false); //not editable
 
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("OpenBook | View book");
+        toolbar.setTitle(R.string.view);
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);

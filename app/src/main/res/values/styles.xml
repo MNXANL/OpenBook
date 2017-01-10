@@ -3,13 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBarOverlay">false</item>
-        <item name="android:statusBarColor">#1565C0</item> <!-- 700 is #1976D2 -->
+        <item name="colorPrimaryDark">#2196F3</item> <!-- Color del ActionBar -->
+        <item name="android:statusBarColor">#1E88E5</item> <!-- Color del StatusBar | 700 is #1976D2 -->
         <item name="android:windowTranslucentStatus">false</item>
-
     </style>
 
     <style name="CustomPopup" parent="ThemeOverlay.AppCompat.Light">
@@ -31,7 +30,11 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">#1976d2</item>
+        <item name="colorPrimaryDark">#0d47a1</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <style name="OverFlow" parent="@android:style/Widget.Holo.ActionButton.Overflow"/>
 
 

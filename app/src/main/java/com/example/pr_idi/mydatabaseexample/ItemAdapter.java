@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.setLongClickListener(new LongClickListener() {
             @Override
             public void onItemLongClick(int position) {
-                Toast.makeText(ctx, "Book is: "+ dades.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ctx, "Book is: "+ dades.get(position).getTitle(),Toast.LENGTH_SHORT).show();
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -71,17 +70,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
                 int req = 0;
                 Book b = dades.get(position);
                 if (!edit) {
-                    Toast.makeText(ctx, "Into BOOK [" + b.getTitle() + "] in POS : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ctx, "Into BOOK [" + b.getTitle() + "] in POS : " + String.valueOf(position), Toast.LENGTH_SHORT).show();
                     i = new Intent(ctx, Activity_Item.class);
                     req = 1;
                 }
                 else /*if (edit)*/ {
                     edit = false;
-                    Toast.makeText(ctx, "Editar " + String.valueOf(position), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ctx, "Editar " + String.valueOf(position), Toast.LENGTH_SHORT).show();
                     i = new Intent(ctx, NewActivity.class);
                     req = 2;
                 }
-
+                i.putExtra("mid", b.getId());
                 i.putExtra("mtitol", b.getTitle());
                 i.putExtra("mautor", b.getAuthor());
                 i.putExtra("myear", b.getYear());
@@ -100,7 +99,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public Book getItemSelected(MenuItem item){
         Book b = dades.get(longPosition);
-        Toast.makeText(ctx, "Item seleccionat " + item.getTitle() + " del llibre " + b.getTitle(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(ctx, "Item seleccionat " + item.getTitle() + " del llibre " + b.getTitle(), Toast.LENGTH_SHORT).show();
         return b;
     }
 
@@ -136,6 +135,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
 
         private void bindEntry (Book b){
+            b.getId();
             mtitol.setText(b.getTitle());
             mautor.setText(b.getAuthor());
             mcategory.setText(b.getCategory());
@@ -182,9 +182,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.setHeaderTitle("Selecciona");
-            contextMenu.add(0,0,0,"Editar");
-            contextMenu.add(0,1,0,"Eliminar");
+            contextMenu.setHeaderTitle(R.string.select);
+            contextMenu.add(0,0,0,R.string.edit);
+            contextMenu.add(0,1,0,R.string.delete);
         }
 
     }

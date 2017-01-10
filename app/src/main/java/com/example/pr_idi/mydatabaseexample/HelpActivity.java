@@ -15,7 +15,7 @@ public class HelpActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private ListView listHelp;
     private ArrayAdapter<String> adapter;
-    private String[] content ={"Create a book", "Edit", "Delete", "Search", "Sort the list"};
+    private String[] content ={"Create new books", "Edit books", "Delete books", "Search for books", "Sort the list"};
     private Integer[] imgid={ R.drawable.ic_create, R.drawable.ic_edit_help,
             R.drawable.ic_delete_help,R.drawable.ic_search_help,R.drawable.ic_sort_help};
     @Override
@@ -27,7 +27,7 @@ public class HelpActivity extends AppCompatActivity{
         listHelp.setAdapter(adapter);
 
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("Help");
+        toolbar.setTitle(R.string.help2);
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
@@ -38,19 +38,19 @@ public class HelpActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String itemSelected = (String) adapterView.getItemAtPosition(i);
                 switch (itemSelected){
-                    case"Create a book":
+                    case "Create new books":
                         Intent i1 = new Intent(HelpActivity.this, Create.class);
                         startActivity(i1);
                         break;
-                    case "Edit":
+                    case "Edit books":
                         Intent i2 = new Intent(HelpActivity.this, Edit.class);
                         startActivity(i2);
                         break;
-                    case "Delete":
+                    case "Delete books":
                         Intent i3 = new Intent(HelpActivity.this, Delete.class);
                         startActivity(i3);
                         break;
-                    case "Search":
+                    case "Search books":
                         Intent i4 = new Intent(HelpActivity.this, Search.class);
                         startActivity(i4);
                         break;

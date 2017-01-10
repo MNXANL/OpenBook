@@ -16,7 +16,17 @@
     <!-- Opciones menu contextual-->
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="missatge1">S\'ha eliminat el llibre </string>
+
+    <string name="missatge1"> has been deleted</string>
+    <string name="missatge2"> has been added</string>
+    <string name="missatge3"> already exists</string>
+    <string name="missatge4"> has been modified</string>
+    <string name="missatge5">A book with the same title and the same author already exists</string>
+    <string name="missatge6">An error has ocurred</string>
+
+    <string name="oneitem">| 1 item selected</string>
+    <string name="moreitem"> items selected</string>
+    <string name="noitem">| No items selected</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -67,8 +77,6 @@
     <string name="s2">2. There are two kind of search: by tittle or by author.</string>
     <string name="s3">3. Press the magnifying glass button to search a book.</string>
     <string name="s4">4. Select the book.</string>
-
-    <string name="sortOpt">Sort</string>
     <string name="sort">Sort the list by an attribute</string>
     <string name="so1">1. Press the options button situated in the upper right corner.</string>
     <string name="so2">2. Select the desired order.</string>
@@ -78,28 +86,44 @@
     <string name="new_book">New Book</string>
     <string name="title_activity_settings">Settings</string>
     <string name="settings">Settings</string>
+    <string name="searchsettings">Search configuration</string>
+    <string name="searchexplain">Searches can be filtered to fetch titles or authors.Choose a search parameter:</string>
+    <string name="sortsettings">Order configuration</string>
+    <string name="sortexplain">The list of books can be sorted according to: title, author, year of publication, category and rating of valuation.Choose an order:</string>
     <string name="help">Help</string>
-    <string name="no_books">There are no books. You can add a new one by clicking here.</string>
 
-    <string name="any">Year</string>
+    <string name="no_books">There are no books. You can add a new one by clicking here.</string>
+    <string name="no_results">There are no books. :(</string>
+
+    <string name="any">Publishing year</string>
     <string name="aboutFrag">AboutActivity</string>
-    <string name="NoEmptyField">No empty fields are allowed.</string>
-    <string name="searchsettings">Search Configuration</string>
-    <string name="searchexplain">Searches can be filtered to fetch either titles or authors. Choose a search parameter:</string>
-    <string name="sortsettings">Sort Configuration</string>
-    <string name="sortexplain">The list of books can be sorted according to title, author, year, category or rating. Choose a sorting parameter:</string>
+
+    <string name="create2">Create or edit a book</string>
+    <string name="about2">About this app</string>
+    <string name="delete3">Delete</string>
+    <string name="edit3">Edit</string>
+    <string name="sort2">Sort the list</string>
+    <string name="help2">Help</string>
+    <string name="select">Select</string>
+    <string name="NoEmptyField">All fields must be filled</string>
+    <string name="selectedit">Select to edit</string>
+    <string name="view">View a book</string>
+    <string name="save">Save</string>
+    <string name="searchFilter">"SEARCH FILTER:</string>
+    <string name="sortFilter">SORT BOOKS BY:</string>
 
     <string-array name="searchOptions">
-        <item>Find by Title</item>
-        <item>Find by Author</item>
+        <item>Author</item>
+        <item>Title</item>
     </string-array>
 
     <string-array name="orderOptions">
-        <item>Order by Title</item>
-        <item>Order by Author</item>
-        <item>Order by Publishing Year</item>
-        <item>Order by Category</item>
-        <item>Order by Rating</item>
+        <item>Title</item>
+        <item>Author</item>
+        <item>Publishing Year</item>
+        <item>Category</item>
+        <item>Rating</item>
     </string-array>
+
 
 </resources>

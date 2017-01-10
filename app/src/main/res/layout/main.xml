@@ -26,11 +26,14 @@
             android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:text="@string/no_books"
             android:onClick="onClick"
             android:gravity="center"
             android:clickable="true"
             android:textAlignment="center" />
+
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"

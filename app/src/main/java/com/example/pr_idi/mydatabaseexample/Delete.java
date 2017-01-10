@@ -13,7 +13,7 @@ public class Delete extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delete);
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("Help");
+        toolbar.setTitle(R.string.delete3);
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);

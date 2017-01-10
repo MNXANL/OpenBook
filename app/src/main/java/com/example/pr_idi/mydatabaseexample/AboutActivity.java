@@ -16,7 +16,7 @@ public class AboutActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle("OpenBook | About this app");
+        toolbar.setTitle(R.string.about2);
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
     }
@@ -32,39 +32,3 @@ public class AboutActivity extends AppCompatActivity {
 }
 
 
-/*
-public class AboutFragment extends Fragment {
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.nav_about_fragment, container, false);
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-
-        super.onResume();
-        new AboutFragment();
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-                    if(getFragmentManager().getBackStackEntryCount() > 0) {
-                        getFragmentManager().popBackStack();
-                    }
-
-                    return true;
-
-                }
-
-                return false;
-            }
-        });
-    }
-
-}
-*/

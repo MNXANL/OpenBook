@@ -13,7 +13,7 @@ public class Edit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("Help");
+        toolbar.setTitle(R.string.edit3);
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         setSupportActionBar(toolbar);

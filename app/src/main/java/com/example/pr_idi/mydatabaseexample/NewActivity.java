@@ -27,7 +27,7 @@ public class NewActivity extends AppCompatActivity {
 
     private String titolantic;
     private String autorantic;
-    private String type;
+    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class NewActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         toolbar = (Toolbar) findViewById(R.id.tbar);
-        toolbar.setTitle("Create or edit book");
+        toolbar.setTitle(R.string.create2);
 
         TextView count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
@@ -54,9 +54,9 @@ public class NewActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
+            id = extras.getLong("mid");
             titolantic = extras.getString("mtitol");
             autorantic = extras.getString("mautor");
-
             titol.setText(extras.getString("mtitol"));
             autor.setText(extras.getString("mautor"));
 
@@ -100,10 +100,11 @@ public class NewActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.nobook:
-                Toast.makeText(getApplicationContext(), "TOP", Toast.LENGTH_SHORT).show();
+            /*case R.id.nobook:
+                Toast.makeText(getApplicationContext(), "TOP", Toast.LENGTH_SHORT).show();*/
             case R.id.ConfirmNewButton: //si cliquem a categoria ens canviem d'activitat
                 Book b = new Book();
+                b.setId(id);
                 b.setTitle(titol.getText().toString());
                 b.setAuthor(autor.getText().toString());
                 if (!any.getText().toString().isEmpty()) {
@@ -140,12 +141,11 @@ public class NewActivity extends AppCompatActivity {
                     i.putExtra("titolantic", titolantic);
                     i.putExtra("autorantic",autorantic);
 
+                    i.putExtra("id", b.getId() );
                     i.putExtra("titol", b.getTitle());
                     i.putExtra("autor", b.getAuthor());
 
-                    int any = b.getYear();
-                    String any2 = String.valueOf(any);
-                    i.putExtra("any", any2);
+                    i.putExtra("any", b.getYear());
 
                     i.putExtra("categoria", b.getCategory());
                     i.putExtra("editorial", b.getPublisher());

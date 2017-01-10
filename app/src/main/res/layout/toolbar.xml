@@ -12,7 +12,7 @@
     android:background="?attr/colorPrimaryDark"
     android:elevation="10dp"
     android:textColor="#ffffff"
-    app:title="MyBookDB" >
+    app:title="@string/app_name" >
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

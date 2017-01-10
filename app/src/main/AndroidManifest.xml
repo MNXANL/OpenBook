@@ -6,7 +6,7 @@
         android:minSdkVersion="7"
         android:targetSdkVersion="18" />
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -53,17 +53,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.pr_idi.mydatabaseexample.MainActivity" />
-        </activity>
-        <activity
-            android:name=".llista_categoria"
-            android:parentActivityName=".NewActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.pr_idi.mydatabaseexample.NewActivity" />
         </activity>
         <activity
             android:name=".NewActivity"
