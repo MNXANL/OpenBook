@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         nobook = (TextView) findViewById(R.id.nobook);
+
         count_text.setVisibility(View.GONE);
 
         //clic al botó
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter.notifyDataSetChanged();
         if(values.size() > 0) nobook.setVisibility(View.GONE);
         else displayText();
+        saveSettings();
     }
 
     private int EvalToNum(String val) {
@@ -190,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Book b = adapter.getItemSelected(item); //llibre sel·leccionat per editar o eliminar
         if (item.getTitle().equals("Edit")){
             Intent i = new Intent(MainActivity.this, NewActivity.class);
+
+            i.putExtra("mid", b.getId());
             i.putExtra("mtitol", b.getTitle());
             i.putExtra("mautor", b.getAuthor());
             i.putExtra("myear", b.getYear());
@@ -203,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             String t = b.getTitle();
             bookData.deleteBook(b);
             values.remove(b);
-            Toast.makeText(getBaseContext(), t + getString(R.string.missatge1), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), t + "  " + getString(R.string.missatge1), Toast.LENGTH_SHORT).show();
 
         }
         sorting();
@@ -225,16 +229,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             sorting();
 
             setChecks(menu);
-
-            //se la configuracio pero com marco els checks?
         }
         else if (resultCode == RESULT_OK) {
             Bundle extras = data.getExtras(); //exception if empty
             Book nou = new Book();
 
+            nou.setId(extras.getLong("id"));
             nou.setTitle(extras.getString("titol"));
             nou.setAuthor(extras.getString("autor"));
-            nou.setYear(Integer.parseInt(extras.getString("any")));
+            nou.setYear(extras.getInt("any"));
             nou.setPublisher(extras.getString("editorial"));
             nou.setCategory(extras.getString("categoria"));
             nou.setPersonal_evaluation(extras.getString("valoracio"));
@@ -243,40 +246,44 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             if (requestCode == 1) {
                 if (!bookData.ExistsBook(nou)) {
-                    bookData.createBook(nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
+                    nou = bookData.createBook(nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
                             nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation());
                     values.add(nou);
                     sorting();
-                    Toast.makeText(getBaseContext(), nou.getTitle() + getString(R.string.missatge2), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), nou.getTitle() + "  " + getString(R.string.missatge2), Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getBaseContext(), nou.getTitle() + " . " +  getString(R.string.missatge3), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), nou.getTitle() + "  " +  getString(R.string.missatge3), Toast.LENGTH_SHORT).show();
                 }
             }
             else if (requestCode == 2) {
                 String titolantic = extras.getString("titolantic");
                 String autorantic = extras.getString("autorantic");
-                if (!bookData.ExistsBook(nou)) {
-                    int k = 0;
-                    boolean found = false;
-                    while(k < values.size() && !found){
-                        Book i = values.get(k);
-                        if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
-                            values.remove(i);
-                            values.add(nou);
-                            found = true;
-                        }
-                        ++k;
+                int k = 0;
+                boolean found = false;
+                boolean abort = false;
+                while (k < values.size() && !found){
+                    Book i = values.get(k);
+                    if (i.getTitle().equals(nou.getTitle()) && i.getAuthor().equals(nou.getAuthor()) ) {
+                        found = true;
+						abort = true;
                     }
+					else if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)) {
+						values.remove(i);
+                        values.add(nou);
+						found = true;
+					}
+                    ++k;
+                }
+                if (!abort) {
                     bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
                             nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
                     sorting();
                     nou.setTitle(extras.getString("titol"));
-                    Toast.makeText(getBaseContext(), nou.getTitle() + getString(R.string.missatge4), Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getBaseContext(),getString(R.string.missatge5), Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(getBaseContext(), nou.getTitle() + "  " + getString(R.string.missatge4), Toast.LENGTH_SHORT).show();
+                }else {
+	                Toast.makeText(getBaseContext(), getString(R.string.missatge5), Toast.LENGTH_SHORT).show();
+				}
             }
             else {
                 Toast.makeText(getBaseContext(), getString(R.string.missatge6), Toast.LENGTH_SHORT).show();
@@ -296,21 +303,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 "Metamorphosis", "Kafka",             "1915", "Kurt Wolff", "Humour", "bo"
         };
         //Afegim els 4 llibres
-        int i = 0;
-        if (!bookData.ExistsTitle(newBook[i])) {
-            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
-        }
-        i += 6;
-        if (!bookData.ExistsTitle(newBook[i])) {
-            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
-        }
-        i += 6;
-        if (!bookData.ExistsTitle(newBook[i])) {
-            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
-        }
-        i += 6;
-        if (!bookData.ExistsTitle(newBook[i])) {
-            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
+        for (int i = 0; i < 24; i += 6) {
+            if (!bookData.ExistsTitle(newBook[i])) {
+                bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
+            }
         }
         defBooks = false;
     }
@@ -342,7 +338,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         adapter.setFilter(newList);
-        if(newList.isEmpty()); //Do nothing
+        if(newList.isEmpty()) {
+            nobook.setVisibility(View.VISIBLE);
+            nobook.setText(getString(R.string.no_results));
+            nobook.setClickable(false);
+        }
+        else {
+            nobook.setVisibility(View.GONE);
+            nobook.setText(getString(R.string.no_books));
+            nobook.setClickable(true);
+        }
         //mirar si la llista es buida ficar imatge de fons
         return true;
     }
@@ -462,10 +467,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 //Toast.makeText(getApplicationContext(),"mode delete",Toast.LENGTH_SHORT).show();
                 if (selection_list != null) {
                     adapter.updateAdapter(selection_list);
-                    clearDeleteMode("NO");
+                    clearDeleteMode("NO", 0);
                 }
                 else {
-                    clearDeleteMode("YES");
+                    clearDeleteMode("YES", 0);
                 }
                 setChecks(menu);
                 toolbar.setTitle(R.string.app_name);
@@ -555,17 +560,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    // Life cycle methods. Check whether it is necessary to reimplement them
-
-    /*@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            finish();
-            return true;
-        }
-        // let the system handle all other key events
-        return super.onKeyDown(keyCode, event);
-    }*/
 
     public void saveSettings () {
         SharedPreferences sp = MainActivity.this.getSharedPreferences(getString(R.string.PREFFILE), MODE_PRIVATE);
@@ -591,7 +585,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void updateCounter(int counter){
         if(counter == 0) count_text.setText(R.string.noitem);
         else if (counter == 1) count_text.setText(R.string.oneitem);
-        else count_text.setText("| " + counter + getString(R.string.moreitem));
+        else count_text.setText("| " + counter +" "+ getString(R.string.moreitem));
     }
 
     public void displayText(){
@@ -604,7 +598,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
     }
-    public void clearDeleteMode(String list_null){
+    public void clearDeleteMode(String list_null, int back){
         adapter.setDelete(false);
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_search);
@@ -618,8 +612,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         count_text.setText(R.string.noitem);
         counter = 0;
         //eliminar de la db
-        if (list_null.equals("NO")) {
+        if (list_null.equals("NO") && back == 0) {
             for (Book i : selection_list) {
+                Toast.makeText(getBaseContext(), i.getTitle() + "  " + getString(R.string.missatge1), Toast.LENGTH_SHORT).show();
+
                 bookData.deleteBook(i);
                 values.remove(i);
             }
@@ -650,15 +646,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         else if (adapter.getDelete()){
             adapter.setDelete(false);
-            if (selection_list != null) clearDeleteMode("NO");
-            else clearDeleteMode("YES");
+            if (selection_list != null) clearDeleteMode("NO", 1);
+            else clearDeleteMode("YES", 1);
             adapter.notifyDataSetChanged();
         }
         else {
             super.onBackPressed();
         }
 
-        Toast.makeText(getApplicationContext(), "COUNT: " + adapter.getItemCount(), Toast.LENGTH_SHORT).show();
+        nobook.setText(getString(R.string.no_books));
+        nobook.setClickable(true);
 
         toolbar.setTitle(R.string.app_name);
         sorting();
