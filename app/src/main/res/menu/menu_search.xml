@@ -15,7 +15,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:title="@string/search"
         android:icon="@drawable/ic_options2"
         app:showAsAction="ifRoom">
-        <menu>
+        <menu android:title="@string/sort">
             <item android:id="@+id/title_menu_text"
                 android:focusable="false"
                 android:textStyle="bold|italic"

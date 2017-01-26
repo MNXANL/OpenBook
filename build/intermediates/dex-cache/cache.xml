@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/mike/Documents/MyBookDatabase/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.0/jars/libs/internal_impl-24.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="8c7087216946c546f85a1242a2794c0f271e092c">
+        <dex dex="/home/mike/Documents/MyBookDatabase/app/build/intermediates/pre-dexed/debug/internal_impl-24.1.0_e099fa85fe7c2a7ec8501aa95dbc0291e34bd349.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mike/Documents/MyBookDatabase/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="e096a5d8343cc9c5a9f6eded36bd0f4c82f8c83e">
+        <dex dex="/home/mike/Documents/MyBookDatabase/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.1.0_503aaac6d4aa52666da7258f50e5b14636dc4cff.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mike/Documents/MyBookDatabase/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="4157816e81f0820983957687e9a6f4c1cea0f1e5">
+        <dex dex="/home/mike/Documents/MyBookDatabase/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.1.0_7559433b221e37d0e3096f7fab7f100e9ef56206.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mike/Documents/MyBookDatabase/app/build/intermediates/exploded-aar/com.android.support/design/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="/home/mike/Documents/MyBookDatabase/app/build/intermediates/pre-dexed/debug/com.android.support-design-22.2.1_f183cc8f10fe0c8bfd0df035db9e5a20d9d7d4c5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mike/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.1.0/support-annotations-24.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="8a23146e1a8c7cb4758e3d3f62449213f1e51f67">
+        <dex dex="/home/mike/Documents/MyBookDatabase/app/build/intermediates/pre-dexed/debug/support-annotations-24.1.0_b9e88fc80474c2b1644e15b6d9bf837e068acb03.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/mike/Documents/MyBookDatabase/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/home/mike/Documents/MyBookDatabase/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-22.2.1_0b0d0c68a83a5e0977648f7704045deacf1c70af.jar" />
+    </item>
+
+</items>

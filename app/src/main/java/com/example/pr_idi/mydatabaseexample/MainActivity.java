@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         count_text = (TextView) findViewById(R.id.counter_text);
         count_text.setVisibility(View.GONE);
         nobook = (TextView) findViewById(R.id.nobook);
-
         count_text.setVisibility(View.GONE);
 
         //clic al botó
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter.notifyDataSetChanged();
         if(values.size() > 0) nobook.setVisibility(View.GONE);
         else displayText();
-        saveSettings();
     }
 
     private int EvalToNum(String val) {
@@ -192,8 +190,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Book b = adapter.getItemSelected(item); //llibre sel·leccionat per editar o eliminar
         if (item.getTitle().equals("Edit")){
             Intent i = new Intent(MainActivity.this, NewActivity.class);
-
-            i.putExtra("mid", b.getId());
             i.putExtra("mtitol", b.getTitle());
             i.putExtra("mautor", b.getAuthor());
             i.putExtra("myear", b.getYear());
@@ -207,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             String t = b.getTitle();
             bookData.deleteBook(b);
             values.remove(b);
-            Toast.makeText(getBaseContext(), t + "  " + getString(R.string.missatge1), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), t + getString(R.string.missatge1), Toast.LENGTH_SHORT).show();
 
         }
         sorting();
@@ -236,10 +232,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             Bundle extras = data.getExtras(); //exception if empty
             Book nou = new Book();
 
-            nou.setId(extras.getLong("id"));
             nou.setTitle(extras.getString("titol"));
             nou.setAuthor(extras.getString("autor"));
-            nou.setYear(extras.getInt("any"));
+            nou.setYear(Integer.parseInt(extras.getString("any")));
             nou.setPublisher(extras.getString("editorial"));
             nou.setCategory(extras.getString("categoria"));
             nou.setPersonal_evaluation(extras.getString("valoracio"));
@@ -248,35 +243,40 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             if (requestCode == 1) {
                 if (!bookData.ExistsBook(nou)) {
-                    nou = bookData.createBook(nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
+                    bookData.createBook(nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
                             nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation());
                     values.add(nou);
                     sorting();
-                    Toast.makeText(getBaseContext(), nou.getTitle() + "  " + getString(R.string.missatge2), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), nou.getTitle() + getString(R.string.missatge2), Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getBaseContext(), nou.getTitle() + "  " +  getString(R.string.missatge3), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), nou.getTitle() + " . " +  getString(R.string.missatge3), Toast.LENGTH_SHORT).show();
                 }
             }
             else if (requestCode == 2) {
                 String titolantic = extras.getString("titolantic");
                 String autorantic = extras.getString("autorantic");
-                int k = 0;
-                boolean found = false;
-                while (k < values.size() && !found){
-                    Book i = values.get(k);
-                    if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
-                        values.remove(i);
-                        values.add(nou);
-                        found = true;
+                if (!bookData.ExistsBook(nou)) {
+                    int k = 0;
+                    boolean found = false;
+                    while(k < values.size() && !found){
+                        Book i = values.get(k);
+                        if (i.getTitle().equals(titolantic) && i.getAuthor().equals(autorantic)){
+                            values.remove(i);
+                            values.add(nou);
+                            found = true;
+                        }
+                        ++k;
                     }
-                    ++k;
+                    bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
+                            nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
+                    sorting();
+                    nou.setTitle(extras.getString("titol"));
+                    Toast.makeText(getBaseContext(), nou.getTitle() + getString(R.string.missatge4), Toast.LENGTH_SHORT).show();
                 }
-                bookData.UpdateBook(nou.getId(), nou.getTitle(), nou.getAuthor(), String.valueOf(nou.getYear()),
-                        nou.getPublisher(), nou.getCategory(), nou.getPersonal_evaluation(), titolantic, autorantic);
-                sorting();
-                nou.setTitle(extras.getString("titol"));
-                Toast.makeText(getBaseContext(), nou.getTitle() + "  " + getString(R.string.missatge4), Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(getBaseContext(),getString(R.string.missatge5), Toast.LENGTH_SHORT).show();
+                }
             }
             else {
                 Toast.makeText(getBaseContext(), getString(R.string.missatge6), Toast.LENGTH_SHORT).show();
@@ -296,10 +296,21 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 "Metamorphosis", "Kafka",             "1915", "Kurt Wolff", "Humour", "bo"
         };
         //Afegim els 4 llibres
-        for (int i = 0; i < 24; i += 6) {
-            if (!bookData.ExistsTitle(newBook[i])) {
-                bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
-            }
+        int i = 0;
+        if (!bookData.ExistsTitle(newBook[i])) {
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
+        }
+        i += 6;
+        if (!bookData.ExistsTitle(newBook[i])) {
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
+        }
+        i += 6;
+        if (!bookData.ExistsTitle(newBook[i])) {
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
+        }
+        i += 6;
+        if (!bookData.ExistsTitle(newBook[i])) {
+            bookData.createBook(newBook[i], newBook[i+1], newBook[i+2], newBook[i+3], newBook[i+4], newBook[i+5]);
         }
         defBooks = false;
     }
@@ -331,16 +342,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         adapter.setFilter(newList);
-        if(newList.isEmpty()) {
-            nobook.setVisibility(View.VISIBLE);
-            nobook.setText(getString(R.string.no_results));
-            nobook.setClickable(false);
-        }
-        else {
-            nobook.setVisibility(View.GONE);
-            nobook.setText(getString(R.string.no_books));
-            nobook.setClickable(true);
-        }
+        if(newList.isEmpty()); //Do nothing
         //mirar si la llista es buida ficar imatge de fons
         return true;
     }
@@ -558,21 +560,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     /*@Override
     public boolean onKeyDown(int keyCode, KeyEvent event)  {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (adapter.getEdit()) {
-                adapter.setEdit(false);
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-            else if (adapter.getDelete()){
-                adapter.setDelete(false);
-                if (selection_list != null) clearDeleteMode("NO");
-                else clearDeleteMode("YES");
-                adapter.notifyDataSetChanged();
-                return true;
-            }
-            nobook.setText(getString(R.string.no_books));
-            nobook.setClickable(true);
+            finish();
+            return true;
         }
+        // let the system handle all other key events
         return super.onKeyDown(keyCode, event);
     }*/
 
@@ -629,8 +620,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //eliminar de la db
         if (list_null.equals("NO")) {
             for (Book i : selection_list) {
-                Toast.makeText(getBaseContext(), i.getTitle() + "  " + getString(R.string.missatge1), Toast.LENGTH_SHORT).show();
-
                 bookData.deleteBook(i);
                 values.remove(i);
             }
@@ -669,8 +658,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             super.onBackPressed();
         }
 
-        nobook.setText(getString(R.string.no_books));
-        nobook.setClickable(true);
+        Toast.makeText(getApplicationContext(), "COUNT: " + adapter.getItemCount(), Toast.LENGTH_SHORT).show();
 
         toolbar.setTitle(R.string.app_name);
         sorting();
