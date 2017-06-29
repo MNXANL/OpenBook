@@ -15,4 +15,4 @@ What can I do with this app?
 
 Made by Miguel Moreno and Marta Barroso for the subject "Interaction and Interface Design" (IDI) at FIB (UPC, Barcelona) on the autumn course, year 2016. 
 
-Our mark has been 10/10, and to say that we are proud of our app would be an understatement! 😄
+Mark of the project: 10/10
